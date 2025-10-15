@@ -1,4 +1,4 @@
-# HighPressure_HHe
+# High-Pressure H/He mixtures
 
 Supporting information for “Hydrogen–helium immiscibility boundary in planets”.
 
