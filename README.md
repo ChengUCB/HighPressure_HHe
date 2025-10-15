@@ -8,6 +8,7 @@ Supporting information for “Hydrogen–helium immiscibility boundary in planet
 HighPressure_HHe/
 ├─ DFT_calculations/        # Training dataset from DFT
 ├─ MLPs/                    # Training scripts and fitted MLPs (N2P2, CACE, MACE)
+├─ MLPs_benchmark/          # Benchmarking the fitted MLPs
 ├─ MLP_MD/                  # MD inputs, runs, and analysis scripts
 └─ MLP-MD_results/          # Immiscibility boundaries and Redlich–Kister fits
 ```
