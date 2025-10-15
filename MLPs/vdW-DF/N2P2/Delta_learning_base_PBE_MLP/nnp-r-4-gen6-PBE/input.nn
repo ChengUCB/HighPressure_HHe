@@ -1,0 +1,1325 @@
+###############################################################################
+# GENERAL NNP SETTINGS
+###############################################################################
+number_of_elements              2              # Number of elements.
+elements                        H  He          # Specification of elements.
+#atom_energy                     H -0.45890771  # Free atom reference energy (H).
+cutoff_type                     2              # Cutoff type.
+scale_symmetry_functions                       # Scale all symmetry functions with min/max values.
+#scale_symmetry_functions_sigma                 # Scale all symmetry functions with sigma.
+scale_min_short                 0.0            # Minimum value for scaling.
+scale_max_short                 1.0            # Maximum value for scaling.
+center_symmetry_functions                      # Center all symmetry functions, i.e. subtract mean value.
+global_hidden_layers_short      2              # Number of hidden layers.
+global_nodes_short              20 20         # Number of nodes in each hidden layer.
+global_activation_short         t t l          # Activation function for each hidden layer and output layer.
+#normalize_nodes                                # Normalize input of nodes.
+
+###############################################################################
+# ADDITIONAL SETTINGS FOR TRAINING
+###############################################################################
+epochs                          60             # Number of training epochs.
+updater_type                    1              # Weight update method (0 = Gradient Descent, 1 = Kalman filter).
+parallel_mode                   1              # Training parallelization used (0 = Serial, 1 = Multi-stream, 2 = MS with PMO).
+jacobian_mode                   1              # Jacobian computation mode (0 = Summation to single gradient, 1 = Per-task summed gradient, 2 = Full Jacobian).
+update_strategy                 0              # Update strategy (0 = Combined, 1 = Per-element).
+selection_mode                  0              # Update candidate selection mode (0 = Random, 1 = Sort, 2 = Threshold).
+task_batch_size_energy          1              # Number of energy update candidates prepared per task for each update (0 = Entire training set).
+task_batch_size_force           1              # Number of force update candidates prepared per task for each update (0 = Entire training set).
+#memorize_symfunc_results                       # Keep symmetry function results in memory.
+random_seed 925
+test_fraction                   0.1            # Fraction of structures kept for testing.
+use_short_forces                               # Use forces for training.
+force_weight                    2.0           # Weight of force updates relative to energy updates.
+short_energy_fraction           1.000          # Fraction of energy updates per epoch.
+short_force_fraction            0.05          # Fraction of force updates per epoch.
+short_energy_error_threshold    1.00           # RMSE threshold for energy update candidates.
+short_force_error_threshold     1.00           # RMSE threshold for force update candidates.
+rmse_threshold_trials           3              # Maximum number of RMSE threshold trials.
+#repeated_energy_update                         # After force update perform energy update for corresponding structure.
+use_old_weights_short                          # Restart fitting with old weight parameters.
+weights_min                     -1.0           # Minimum value for initial random weights.
+weights_max                     1.0            # Maximum value for initial random weights.
+#precondition_weights                           # Precondition weights with initial energies.
+#nguyen_widrow_weights_short                    # Initialize neural network weights according to Nguyen-Widrow scheme.
+write_trainpoints               50             # Write energy comparison.
+write_trainforces               50             # Write force comparison.
+write_weights_epoch             1                            # Write weights.
+#write_neuronstats               5 10           # Write neuron statistics.
+#write_trainlog                                 # Write training log file.
+####################
+# GRADIENT DESCENT #
+####################
+gradient_type                   0              # Gradient descent type (0 = Fixed step size).
+gradient_eta                    1.0E-4         # Gradient descent parameter eta (fixed step size).
+############################
+# KALMAN FILTER (STANDARD) #
+############################
+kalman_type                     0              # Kalman filter type (0 = Standard, 1 = Fading memory).
+kalman_epsilon                  1.0E-2         # General Kalman filter parameter epsilon (sigmoidal: 0.01, linear: 0.001).
+kalman_q0                       0.01           # General Kalman filter parameter q0 ("large").
+kalman_qtau                     2.302          # General Kalman filter parameter qtau (2.302 => 1 order of magnitude per epoch).
+kalman_qmin                     1.0E-6         # General Kalman filter parameter qmin (typ. 1.0E-6).
+kalman_eta                      0.01           # Standard Kalman filter parameter eta (0.001-1.0).
+kalman_etatau                   2.302          # Standard Kalman filter parameter etatau (2.302 => 1 order of magnitude per epoch).
+kalman_etamax                   1.0            # Standard Kalman filter parameter etamax (1.0+).
+#################################
+# KALMAN FILTER (FADING MEMORY) #
+#################################
+#kalman_type                     1              # Kalman filter type (0 = Standard, 1 = Fading memory).
+#kalman_epsilon                  1.0E-1         # General Kalman filter parameter epsilon (sigmoidal: 0.01, linear: 0.001).
+#kalman_q0                       0.00           # General Kalman filter parameter q0 ("large").
+#kalman_qtau                     2.302          # General Kalman filter parameter qtau (2.302 => 1 order of magnitude per epoch).
+#kalman_qmin                     0.0E-6         # General Kalman filter parameter qmin (typ. 1.0E-6).
+#kalman_lambda_short             0.96000        # Fading memory Kalman filter parameter lambda (forgetting factor 0.95-0.99).
+#kalman_nue_short                0.99950        # Fading memory Kalman filter parameter nu (0.99-0.9995).
+
+###############################################################################
+# SYMMETRY FUNCTIONS
+###############################################################################
+
+# Radial symmetry function (type 2):
+#symfunction_short <element-central> 2 <element-neighbor> <eta> <rshift> <rcutoff>
+
+# Narrow Angular symmetry function (type 3):
+#symfunction_short <element-central> 3 <element-neighbor1> <element-neighbor2> <eta> <lambda> <zeta> <rcutoff>
+
+# Wide Angular symmetry function (type 9):
+#symfunction_short <element-central> 9 <element-neighbor1> <element-neighbor2> <eta> <lambda> <zeta> <rcutoff>
+
+# symfunctions for type He 2 C
+# symfunction_short He 2 He 0.0625 0.000 4.000
+# symfunction_short He 2 He 0.0843 0.000 4.000
+# symfunction_short He 2 He 0.1138 0.000 4.000
+# symfunction_short He 2 He 0.1535 0.000 4.000
+# symfunction_short He 2 He 0.2072 0.000 4.000
+# symfunction_short He 2 He 0.2795 0.000 4.000
+symfunction_short He 2 He 0.3771 0.000 4.000
+# symfunction_short He 2 He 0.5089 0.000 4.000
+# symfunction_short He 2 He 0.6866 0.000 4.000
+# symfunction_short He 2 He 0.9264 0.000 4.000
+# symfunction_short He 2 He 1.2500 0.000 4.000
+# symfunction_short He 2 He 1.6866 0.000 4.000
+# symfunction_short He 2 He 2.2757 0.000 4.000
+# symfunction_short He 2 He 3.0706 0.000 4.000
+# symfunction_short He 2 He 4.1431 0.000 4.000
+# symfunction_short He 2 He 5.5902 0.000 4.000
+# symfunction_short He 2 He 7.5427 0.000 4.000
+# symfunction_short He 2 He 10.1773 0.000 4.000
+# symfunction_short He 2 He 13.7320 0.000 4.000
+# symfunction_short He 2 He 18.5284 0.000 4.000
+# symfunction_short He 2 He 25.0000 0.000 4.000
+# symfunction_short He 2 He 957.4821 0.200 4.000
+# symfunction_short He 2 He 709.6230 0.232 4.000
+# symfunction_short He 2 He 525.9260 0.270 4.000
+# symfunction_short He 2 He 389.7819 0.313 4.000
+# symfunction_short He 2 He 288.8808 0.364 4.000
+# symfunction_short He 2 He 214.0995 0.423 4.000
+# symfunction_short He 2 He 158.6765 0.491 4.000
+# symfunction_short He 2 He 117.6006 0.571 4.000
+# symfunction_short He 2 He 87.1579 0.663 4.000
+# symfunction_short He 2 He 64.5957 0.770 4.000
+# symfunction_short He 2 He 47.8741 0.894 4.000
+# symfunction_short He 2 He 35.4811 1.039 4.000
+# symfunction_short He 2 He 26.2963 1.207 4.000
+# symfunction_short He 2 He 19.4891 1.402 4.000
+# symfunction_short He 2 He 14.4440 1.628 4.000
+# symfunction_short He 2 He 10.7050 1.891 4.000
+# symfunction_short He 2 He 7.9338 2.197 4.000
+# symfunction_short He 2 He 5.8800 2.552 4.000
+# symfunction_short He 2 He 4.3579 2.965 4.000
+# symfunction_short He 2 He 3.2298 3.444 4.000
+# symfunctions for type He 2 H
+# symfunction_short He 2 H 0.0625 0.000 4.000
+# symfunction_short He 2 H 0.0843 0.000 4.000
+symfunction_short He 2 H 0.1138 0.000 4.000
+# symfunction_short He 2 H 0.1535 0.000 4.000
+# symfunction_short He 2 H 0.2072 0.000 4.000
+# symfunction_short He 2 H 0.2795 0.000 4.000
+# symfunction_short He 2 H 0.3771 0.000 4.000
+# symfunction_short He 2 H 0.5089 0.000 4.000
+# symfunction_short He 2 H 0.6866 0.000 4.000
+# symfunction_short He 2 H 0.9264 0.000 4.000
+# symfunction_short He 2 H 1.2500 0.000 4.000
+# symfunction_short He 2 H 1.6866 0.000 4.000
+# symfunction_short He 2 H 2.2757 0.000 4.000
+# symfunction_short He 2 H 3.0706 0.000 4.000
+# symfunction_short He 2 H 4.1431 0.000 4.000
+# symfunction_short He 2 H 5.5902 0.000 4.000
+# symfunction_short He 2 H 7.5427 0.000 4.000
+# symfunction_short He 2 H 10.1773 0.000 4.000
+# symfunction_short He 2 H 13.7320 0.000 4.000
+# symfunction_short He 2 H 18.5284 0.000 4.000
+# symfunction_short He 2 H 25.0000 0.000 4.000
+# symfunction_short He 2 H 957.4821 0.200 4.000
+# symfunction_short He 2 H 709.6230 0.232 4.000
+# symfunction_short He 2 H 525.9260 0.270 4.000
+# symfunction_short He 2 H 389.7819 0.313 4.000
+# symfunction_short He 2 H 288.8808 0.364 4.000
+# symfunction_short He 2 H 214.0995 0.423 4.000
+# symfunction_short He 2 H 158.6765 0.491 4.000
+# symfunction_short He 2 H 117.6006 0.571 4.000
+# symfunction_short He 2 H 87.1579 0.663 4.000
+# symfunction_short He 2 H 64.5957 0.770 4.000
+# symfunction_short He 2 H 47.8741 0.894 4.000
+# symfunction_short He 2 H 35.4811 1.039 4.000
+# symfunction_short He 2 H 26.2963 1.207 4.000
+# symfunction_short He 2 H 19.4891 1.402 4.000
+# symfunction_short He 2 H 14.4440 1.628 4.000
+# symfunction_short He 2 H 10.7050 1.891 4.000
+# symfunction_short He 2 H 7.9338 2.197 4.000
+# symfunction_short He 2 H 5.8800 2.552 4.000
+# symfunction_short He 2 H 4.3579 2.965 4.000
+# symfunction_short He 2 H 3.2298 3.444 4.000
+# symfunctions for type H 2 C
+# symfunction_short H 2 He 0.0625 0.000 4.000
+# symfunction_short H 2 He 0.0843 0.000 4.000
+# symfunction_short H 2 He 0.1138 0.000 4.000
+# symfunction_short H 2 He 0.1535 0.000 4.000
+# symfunction_short H 2 He 0.2072 0.000 4.000
+# symfunction_short H 2 He 0.2795 0.000 4.000
+# symfunction_short H 2 He 0.3771 0.000 4.000
+# symfunction_short H 2 He 0.5089 0.000 4.000
+# symfunction_short H 2 He 0.6866 0.000 4.000
+# symfunction_short H 2 He 0.9264 0.000 4.000
+# symfunction_short H 2 He 1.2500 0.000 4.000
+# symfunction_short H 2 He 1.6866 0.000 4.000
+# symfunction_short H 2 He 2.2757 0.000 4.000
+# symfunction_short H 2 He 3.0706 0.000 4.000
+# symfunction_short H 2 He 4.1431 0.000 4.000
+# symfunction_short H 2 He 5.5902 0.000 4.000
+# symfunction_short H 2 He 7.5427 0.000 4.000
+# symfunction_short H 2 He 10.1773 0.000 4.000
+# symfunction_short H 2 He 13.7320 0.000 4.000
+# symfunction_short H 2 He 18.5284 0.000 4.000
+# symfunction_short H 2 He 25.0000 0.000 4.000
+# symfunction_short H 2 He 957.4821 0.200 4.000
+# symfunction_short H 2 He 709.6230 0.232 4.000
+# symfunction_short H 2 He 525.9260 0.270 4.000
+# symfunction_short H 2 He 389.7819 0.313 4.000
+# symfunction_short H 2 He 288.8808 0.364 4.000
+# symfunction_short H 2 He 214.0995 0.423 4.000
+# symfunction_short H 2 He 158.6765 0.491 4.000
+# symfunction_short H 2 He 117.6006 0.571 4.000
+# symfunction_short H 2 He 87.1579 0.663 4.000
+# symfunction_short H 2 He 64.5957 0.770 4.000
+# symfunction_short H 2 He 47.8741 0.894 4.000
+# symfunction_short H 2 He 35.4811 1.039 4.000
+# symfunction_short H 2 He 26.2963 1.207 4.000
+# symfunction_short H 2 He 19.4891 1.402 4.000
+# symfunction_short H 2 He 14.4440 1.628 4.000
+# symfunction_short H 2 He 10.7050 1.891 4.000
+# symfunction_short H 2 He 7.9338 2.197 4.000
+# symfunction_short H 2 He 5.8800 2.552 4.000
+# symfunction_short H 2 He 4.3579 2.965 4.000
+# symfunction_short H 2 He 3.2298 3.444 4.000
+# symfunctions for type H 2 H
+# symfunction_short H 2 H 0.0625 0.000 4.000
+# symfunction_short H 2 H 0.0843 0.000 4.000
+# symfunction_short H 2 H 0.1138 0.000 4.000
+# symfunction_short H 2 H 0.1535 0.000 4.000
+# symfunction_short H 2 H 0.2072 0.000 4.000
+# symfunction_short H 2 H 0.2795 0.000 4.000
+# symfunction_short H 2 H 0.3771 0.000 4.000
+# symfunction_short H 2 H 0.5089 0.000 4.000
+# symfunction_short H 2 H 0.6866 0.000 4.000
+# symfunction_short H 2 H 0.9264 0.000 4.000
+# symfunction_short H 2 H 1.2500 0.000 4.000
+# symfunction_short H 2 H 1.6866 0.000 4.000
+# symfunction_short H 2 H 2.2757 0.000 4.000
+# symfunction_short H 2 H 3.0706 0.000 4.000
+# symfunction_short H 2 H 4.1431 0.000 4.000
+# symfunction_short H 2 H 5.5902 0.000 4.000
+# symfunction_short H 2 H 7.5427 0.000 4.000
+# symfunction_short H 2 H 10.1773 0.000 4.000
+# symfunction_short H 2 H 13.7320 0.000 4.000
+# symfunction_short H 2 H 18.5284 0.000 4.000
+# symfunction_short H 2 H 25.0000 0.000 4.000
+# symfunction_short H 2 H 957.4821 0.200 4.000
+# symfunction_short H 2 H 709.6230 0.232 4.000
+# symfunction_short H 2 H 525.9260 0.270 4.000
+# symfunction_short H 2 H 389.7819 0.313 4.000
+# symfunction_short H 2 H 288.8808 0.364 4.000
+# symfunction_short H 2 H 214.0995 0.423 4.000
+# symfunction_short H 2 H 158.6765 0.491 4.000
+# symfunction_short H 2 H 117.6006 0.571 4.000
+# symfunction_short H 2 H 87.1579 0.663 4.000
+# symfunction_short H 2 H 64.5957 0.770 4.000
+# symfunction_short H 2 H 47.8741 0.894 4.000
+# symfunction_short H 2 H 35.4811 1.039 4.000
+# symfunction_short H 2 H 26.2963 1.207 4.000
+# symfunction_short H 2 H 19.4891 1.402 4.000
+# symfunction_short H 2 H 14.4440 1.628 4.000
+# symfunction_short H 2 H 10.7050 1.891 4.000
+# symfunction_short H 2 H 7.9338 2.197 4.000
+# symfunction_short H 2 H 5.8800 2.552 4.000
+# symfunction_short H 2 H 4.3579 2.965 4.000
+# symfunction_short H 2 H 3.2298 3.444 4.000
+# symfunctions for type He 3 He C
+symfunction_short He 3 He He 0.0010  1.000 1.000 4.000
+symfunction_short He 3 He He 0.0010 -1.000 1.000 4.000
+# symfunction_short He 3 He He 0.0010  1.000 4.000 4.000
+# symfunction_short He 3 He He 0.0010 -1.000 4.000 4.000
+# symfunction_short He 3 He He 0.0010  1.000 16.000 4.000
+# symfunction_short He 3 He He 0.0010 -1.000 16.000 4.000
+# symfunction_short He 3 He He 0.0022  1.000 1.000 4.000
+symfunction_short He 3 He He 0.0022 -1.000 1.000 4.000
+# symfunction_short He 3 He He 0.0022  1.000 4.000 4.000
+# symfunction_short He 3 He He 0.0022 -1.000 4.000 4.000
+# symfunction_short He 3 He He 0.0022  1.000 16.000 4.000
+# symfunction_short He 3 He He 0.0022 -1.000 16.000 4.000
+# symfunction_short He 3 He He 0.0046  1.000 1.000 4.000
+symfunction_short He 3 He He 0.0046 -1.000 1.000 4.000
+# symfunction_short He 3 He He 0.0046  1.000 4.000 4.000
+symfunction_short He 3 He He 0.0046 -1.000 4.000 4.000
+# symfunction_short He 3 He He 0.0046  1.000 16.000 4.000
+# symfunction_short He 3 He He 0.0046 -1.000 16.000 4.000
+symfunction_short He 3 He He 0.0100  1.000 1.000 4.000
+# symfunction_short He 3 He He 0.0100 -1.000 1.000 4.000
+# symfunction_short He 3 He He 0.0100  1.000 4.000 4.000
+# symfunction_short He 3 He He 0.0100 -1.000 4.000 4.000
+# symfunction_short He 3 He He 0.0100  1.000 16.000 4.000
+# symfunction_short He 3 He He 0.0100 -1.000 16.000 4.000
+symfunction_short He 3 He He 0.0215  1.000 1.000 4.000
+# symfunction_short He 3 He He 0.0215 -1.000 1.000 4.000
+# symfunction_short He 3 He He 0.0215  1.000 4.000 4.000
+# symfunction_short He 3 He He 0.0215 -1.000 4.000 4.000
+# symfunction_short He 3 He He 0.0215  1.000 16.000 4.000
+# symfunction_short He 3 He He 0.0215 -1.000 16.000 4.000
+# symfunction_short He 3 He He 0.0464  1.000 1.000 4.000
+symfunction_short He 3 He He 0.0464 -1.000 1.000 4.000
+# symfunction_short He 3 He He 0.0464  1.000 4.000 4.000
+symfunction_short He 3 He He 0.0464 -1.000 4.000 4.000
+symfunction_short He 3 He He 0.0464  1.000 16.000 4.000
+# symfunction_short He 3 He He 0.0464 -1.000 16.000 4.000
+# symfunction_short He 3 He He 0.1000  1.000 1.000 4.000
+symfunction_short He 3 He He 0.1000 -1.000 1.000 4.000
+symfunction_short He 3 He He 0.1000  1.000 4.000 4.000
+# symfunction_short He 3 He He 0.1000 -1.000 4.000 4.000
+symfunction_short He 3 He He 0.1000  1.000 16.000 4.000
+# symfunction_short He 3 He He 0.1000 -1.000 16.000 4.000
+# symfunction_short He 3 He He 0.2154  1.000 1.000 4.000
+symfunction_short He 3 He He 0.2154 -1.000 1.000 4.000
+# symfunction_short He 3 He He 0.2154  1.000 4.000 4.000
+# symfunction_short He 3 He He 0.2154 -1.000 4.000 4.000
+# symfunction_short He 3 He He 0.2154  1.000 16.000 4.000
+# symfunction_short He 3 He He 0.2154 -1.000 16.000 4.000
+symfunction_short He 3 He He 0.4642  1.000 1.000 4.000
+symfunction_short He 3 He He 0.4642 -1.000 1.000 4.000
+symfunction_short He 3 He He 0.4642  1.000 4.000 4.000
+# symfunction_short He 3 He He 0.4642 -1.000 4.000 4.000
+# symfunction_short He 3 He He 0.4642  1.000 16.000 4.000
+# symfunction_short He 3 He He 0.4642 -1.000 16.000 4.000
+# symfunction_short He 3 He He 1.0000  1.000 1.000 4.000
+# symfunction_short He 3 He He 1.0000 -1.000 1.000 4.000
+# symfunction_short He 3 He He 1.0000  1.000 4.000 4.000
+# symfunction_short He 3 He He 1.0000 -1.000 4.000 4.000
+# symfunction_short He 3 He He 1.0000  1.000 16.000 4.000
+# symfunction_short He 3 He He 1.0000 -1.000 16.000 4.000
+# symfunctions for type He 3 He H
+# symfunction_short He 3 He H 0.0010  1.000 1.000 4.000
+# symfunction_short He 3 He H 0.0010 -1.000 1.000 4.000
+symfunction_short He 3 He H 0.0010  1.000 4.000 4.000
+# symfunction_short He 3 He H 0.0010 -1.000 4.000 4.000
+# symfunction_short He 3 He H 0.0010  1.000 16.000 4.000
+# symfunction_short He 3 He H 0.0010 -1.000 16.000 4.000
+# symfunction_short He 3 He H 0.0022  1.000 1.000 4.000
+# symfunction_short He 3 He H 0.0022 -1.000 1.000 4.000
+# symfunction_short He 3 He H 0.0022  1.000 4.000 4.000
+symfunction_short He 3 He H 0.0022 -1.000 4.000 4.000
+# symfunction_short He 3 He H 0.0022  1.000 16.000 4.000
+# symfunction_short He 3 He H 0.0022 -1.000 16.000 4.000
+# symfunction_short He 3 He H 0.0046  1.000 1.000 4.000
+# symfunction_short He 3 He H 0.0046 -1.000 1.000 4.000
+# symfunction_short He 3 He H 0.0046  1.000 4.000 4.000
+# symfunction_short He 3 He H 0.0046 -1.000 4.000 4.000
+# symfunction_short He 3 He H 0.0046  1.000 16.000 4.000
+# symfunction_short He 3 He H 0.0046 -1.000 16.000 4.000
+# symfunction_short He 3 He H 0.0100  1.000 1.000 4.000
+# symfunction_short He 3 He H 0.0100 -1.000 1.000 4.000
+# symfunction_short He 3 He H 0.0100  1.000 4.000 4.000
+# symfunction_short He 3 He H 0.0100 -1.000 4.000 4.000
+# symfunction_short He 3 He H 0.0100  1.000 16.000 4.000
+# symfunction_short He 3 He H 0.0100 -1.000 16.000 4.000
+symfunction_short He 3 He H 0.0215  1.000 1.000 4.000
+# symfunction_short He 3 He H 0.0215 -1.000 1.000 4.000
+# symfunction_short He 3 He H 0.0215  1.000 4.000 4.000
+# symfunction_short He 3 He H 0.0215 -1.000 4.000 4.000
+# symfunction_short He 3 He H 0.0215  1.000 16.000 4.000
+# symfunction_short He 3 He H 0.0215 -1.000 16.000 4.000
+symfunction_short He 3 He H 0.0464  1.000 1.000 4.000
+symfunction_short He 3 He H 0.0464 -1.000 1.000 4.000
+symfunction_short He 3 He H 0.0464  1.000 4.000 4.000
+symfunction_short He 3 He H 0.0464 -1.000 4.000 4.000
+symfunction_short He 3 He H 0.0464  1.000 16.000 4.000
+# symfunction_short He 3 He H 0.0464 -1.000 16.000 4.000
+# symfunction_short He 3 He H 0.1000  1.000 1.000 4.000
+# symfunction_short He 3 He H 0.1000 -1.000 1.000 4.000
+symfunction_short He 3 He H 0.1000  1.000 4.000 4.000
+symfunction_short He 3 He H 0.1000 -1.000 4.000 4.000
+symfunction_short He 3 He H 0.1000  1.000 16.000 4.000
+# symfunction_short He 3 He H 0.1000 -1.000 16.000 4.000
+symfunction_short He 3 He H 0.2154  1.000 1.000 4.000
+# symfunction_short He 3 He H 0.2154 -1.000 1.000 4.000
+symfunction_short He 3 He H 0.2154  1.000 4.000 4.000
+# symfunction_short He 3 He H 0.2154 -1.000 4.000 4.000
+# symfunction_short He 3 He H 0.2154  1.000 16.000 4.000
+# symfunction_short He 3 He H 0.2154 -1.000 16.000 4.000
+# symfunction_short He 3 He H 0.4642  1.000 1.000 4.000
+# symfunction_short He 3 He H 0.4642 -1.000 1.000 4.000
+# symfunction_short He 3 He H 0.4642  1.000 4.000 4.000
+# symfunction_short He 3 He H 0.4642 -1.000 4.000 4.000
+# symfunction_short He 3 He H 0.4642  1.000 16.000 4.000
+# symfunction_short He 3 He H 0.4642 -1.000 16.000 4.000
+# symfunction_short He 3 He H 1.0000  1.000 1.000 4.000
+# symfunction_short He 3 He H 1.0000 -1.000 1.000 4.000
+# symfunction_short He 3 He H 1.0000  1.000 4.000 4.000
+# symfunction_short He 3 He H 1.0000 -1.000 4.000 4.000
+# symfunction_short He 3 He H 1.0000  1.000 16.000 4.000
+# symfunction_short He 3 He H 1.0000 -1.000 16.000 4.000
+# symfunctions for type He 3 H H
+# symfunction_short He 3 H H 0.0010  1.000 1.000 4.000
+# symfunction_short He 3 H H 0.0010 -1.000 1.000 4.000
+symfunction_short He 3 H H 0.0010  1.000 4.000 4.000
+# symfunction_short He 3 H H 0.0010 -1.000 4.000 4.000
+# symfunction_short He 3 H H 0.0010  1.000 16.000 4.000
+# symfunction_short He 3 H H 0.0010 -1.000 16.000 4.000
+# symfunction_short He 3 H H 0.0022  1.000 1.000 4.000
+# symfunction_short He 3 H H 0.0022 -1.000 1.000 4.000
+symfunction_short He 3 H H 0.0022  1.000 4.000 4.000
+# symfunction_short He 3 H H 0.0022 -1.000 4.000 4.000
+# symfunction_short He 3 H H 0.0022  1.000 16.000 4.000
+# symfunction_short He 3 H H 0.0022 -1.000 16.000 4.000
+# symfunction_short He 3 H H 0.0046  1.000 1.000 4.000
+# symfunction_short He 3 H H 0.0046 -1.000 1.000 4.000
+symfunction_short He 3 H H 0.0046  1.000 4.000 4.000
+# symfunction_short He 3 H H 0.0046 -1.000 4.000 4.000
+# symfunction_short He 3 H H 0.0046  1.000 16.000 4.000
+# symfunction_short He 3 H H 0.0046 -1.000 16.000 4.000
+# symfunction_short He 3 H H 0.0100  1.000 1.000 4.000
+symfunction_short He 3 H H 0.0100 -1.000 1.000 4.000
+symfunction_short He 3 H H 0.0100  1.000 4.000 4.000
+# symfunction_short He 3 H H 0.0100 -1.000 4.000 4.000
+# symfunction_short He 3 H H 0.0100  1.000 16.000 4.000
+# symfunction_short He 3 H H 0.0100 -1.000 16.000 4.000
+# symfunction_short He 3 H H 0.0215  1.000 1.000 4.000
+# symfunction_short He 3 H H 0.0215 -1.000 1.000 4.000
+# symfunction_short He 3 H H 0.0215  1.000 4.000 4.000
+# symfunction_short He 3 H H 0.0215 -1.000 4.000 4.000
+# symfunction_short He 3 H H 0.0215  1.000 16.000 4.000
+# symfunction_short He 3 H H 0.0215 -1.000 16.000 4.000
+# symfunction_short He 3 H H 0.0464  1.000 1.000 4.000
+symfunction_short He 3 H H 0.0464 -1.000 1.000 4.000
+# symfunction_short He 3 H H 0.0464  1.000 4.000 4.000
+# symfunction_short He 3 H H 0.0464 -1.000 4.000 4.000
+# symfunction_short He 3 H H 0.0464  1.000 16.000 4.000
+# symfunction_short He 3 H H 0.0464 -1.000 16.000 4.000
+# symfunction_short He 3 H H 0.1000  1.000 1.000 4.000
+symfunction_short He 3 H H 0.1000 -1.000 1.000 4.000
+symfunction_short He 3 H H 0.1000  1.000 4.000 4.000
+symfunction_short He 3 H H 0.1000 -1.000 4.000 4.000
+symfunction_short He 3 H H 0.1000  1.000 16.000 4.000
+# symfunction_short He 3 H H 0.1000 -1.000 16.000 4.000
+symfunction_short He 3 H H 0.2154  1.000 1.000 4.000
+# symfunction_short He 3 H H 0.2154 -1.000 1.000 4.000
+symfunction_short He 3 H H 0.2154  1.000 4.000 4.000
+symfunction_short He 3 H H 0.2154 -1.000 4.000 4.000
+symfunction_short He 3 H H 0.2154  1.000 16.000 4.000
+# symfunction_short He 3 H H 0.2154 -1.000 16.000 4.000
+symfunction_short He 3 H H 0.4642  1.000 1.000 4.000
+# symfunction_short He 3 H H 0.4642 -1.000 1.000 4.000
+symfunction_short He 3 H H 0.4642  1.000 4.000 4.000
+# symfunction_short He 3 H H 0.4642 -1.000 4.000 4.000
+symfunction_short He 3 H H 0.4642  1.000 16.000 4.000
+# symfunction_short He 3 H H 0.4642 -1.000 16.000 4.000
+symfunction_short He 3 H H 1.0000  1.000 1.000 4.000
+# symfunction_short He 3 H H 1.0000 -1.000 1.000 4.000
+# symfunction_short He 3 H H 1.0000  1.000 4.000 4.000
+# symfunction_short He 3 H H 1.0000 -1.000 4.000 4.000
+# symfunction_short He 3 H H 1.0000  1.000 16.000 4.000
+# symfunction_short He 3 H H 1.0000 -1.000 16.000 4.000
+# symfunctions for type H 3 He C
+# symfunction_short H 3 He He 0.0010  1.000 1.000 4.000
+# symfunction_short H 3 He He 0.0010 -1.000 1.000 4.000
+# symfunction_short H 3 He He 0.0010  1.000 4.000 4.000
+# symfunction_short H 3 He He 0.0010 -1.000 4.000 4.000
+# symfunction_short H 3 He He 0.0010  1.000 16.000 4.000
+# symfunction_short H 3 He He 0.0010 -1.000 16.000 4.000
+# symfunction_short H 3 He He 0.0022  1.000 1.000 4.000
+# symfunction_short H 3 He He 0.0022 -1.000 1.000 4.000
+# symfunction_short H 3 He He 0.0022  1.000 4.000 4.000
+# symfunction_short H 3 He He 0.0022 -1.000 4.000 4.000
+# symfunction_short H 3 He He 0.0022  1.000 16.000 4.000
+# symfunction_short H 3 He He 0.0022 -1.000 16.000 4.000
+# symfunction_short H 3 He He 0.0046  1.000 1.000 4.000
+# symfunction_short H 3 He He 0.0046 -1.000 1.000 4.000
+# symfunction_short H 3 He He 0.0046  1.000 4.000 4.000
+# symfunction_short H 3 He He 0.0046 -1.000 4.000 4.000
+# symfunction_short H 3 He He 0.0046  1.000 16.000 4.000
+# symfunction_short H 3 He He 0.0046 -1.000 16.000 4.000
+# symfunction_short H 3 He He 0.0100  1.000 1.000 4.000
+# symfunction_short H 3 He He 0.0100 -1.000 1.000 4.000
+# symfunction_short H 3 He He 0.0100  1.000 4.000 4.000
+# symfunction_short H 3 He He 0.0100 -1.000 4.000 4.000
+# symfunction_short H 3 He He 0.0100  1.000 16.000 4.000
+# symfunction_short H 3 He He 0.0100 -1.000 16.000 4.000
+# symfunction_short H 3 He He 0.0215  1.000 1.000 4.000
+# symfunction_short H 3 He He 0.0215 -1.000 1.000 4.000
+# symfunction_short H 3 He He 0.0215  1.000 4.000 4.000
+# symfunction_short H 3 He He 0.0215 -1.000 4.000 4.000
+# symfunction_short H 3 He He 0.0215  1.000 16.000 4.000
+# symfunction_short H 3 He He 0.0215 -1.000 16.000 4.000
+# symfunction_short H 3 He He 0.0464  1.000 1.000 4.000
+symfunction_short H 3 He He 0.0464 -1.000 1.000 4.000
+# symfunction_short H 3 He He 0.0464  1.000 4.000 4.000
+# symfunction_short H 3 He He 0.0464 -1.000 4.000 4.000
+# symfunction_short H 3 He He 0.0464  1.000 16.000 4.000
+# symfunction_short H 3 He He 0.0464 -1.000 16.000 4.000
+symfunction_short H 3 He He 0.1000  1.000 1.000 4.000
+symfunction_short H 3 He He 0.1000 -1.000 1.000 4.000
+# symfunction_short H 3 He He 0.1000  1.000 4.000 4.000
+# symfunction_short H 3 He He 0.1000 -1.000 4.000 4.000
+# symfunction_short H 3 He He 0.1000  1.000 16.000 4.000
+# symfunction_short H 3 He He 0.1000 -1.000 16.000 4.000
+# symfunction_short H 3 He He 0.2154  1.000 1.000 4.000
+symfunction_short H 3 He He 0.2154 -1.000 1.000 4.000
+# symfunction_short H 3 He He 0.2154  1.000 4.000 4.000
+# symfunction_short H 3 He He 0.2154 -1.000 4.000 4.000
+# symfunction_short H 3 He He 0.2154  1.000 16.000 4.000
+# symfunction_short H 3 He He 0.2154 -1.000 16.000 4.000
+# symfunction_short H 3 He He 0.4642  1.000 1.000 4.000
+# symfunction_short H 3 He He 0.4642 -1.000 1.000 4.000
+# symfunction_short H 3 He He 0.4642  1.000 4.000 4.000
+# symfunction_short H 3 He He 0.4642 -1.000 4.000 4.000
+# symfunction_short H 3 He He 0.4642  1.000 16.000 4.000
+# symfunction_short H 3 He He 0.4642 -1.000 16.000 4.000
+# symfunction_short H 3 He He 1.0000  1.000 1.000 4.000
+# symfunction_short H 3 He He 1.0000 -1.000 1.000 4.000
+# symfunction_short H 3 He He 1.0000  1.000 4.000 4.000
+# symfunction_short H 3 He He 1.0000 -1.000 4.000 4.000
+# symfunction_short H 3 He He 1.0000  1.000 16.000 4.000
+# symfunction_short H 3 He He 1.0000 -1.000 16.000 4.000
+# symfunctions for type H 3 He H
+symfunction_short H 3 He H 0.0010  1.000 1.000 4.000
+# symfunction_short H 3 He H 0.0010 -1.000 1.000 4.000
+# symfunction_short H 3 He H 0.0010  1.000 4.000 4.000
+symfunction_short H 3 He H 0.0010 -1.000 4.000 4.000
+# symfunction_short H 3 He H 0.0010  1.000 16.000 4.000
+# symfunction_short H 3 He H 0.0010 -1.000 16.000 4.000
+symfunction_short H 3 He H 0.0022  1.000 1.000 4.000
+# symfunction_short H 3 He H 0.0022 -1.000 1.000 4.000
+# symfunction_short H 3 He H 0.0022  1.000 4.000 4.000
+symfunction_short H 3 He H 0.0022 -1.000 4.000 4.000
+# symfunction_short H 3 He H 0.0022  1.000 16.000 4.000
+# symfunction_short H 3 He H 0.0022 -1.000 16.000 4.000
+# symfunction_short H 3 He H 0.0046  1.000 1.000 4.000
+# symfunction_short H 3 He H 0.0046 -1.000 1.000 4.000
+# symfunction_short H 3 He H 0.0046  1.000 4.000 4.000
+# symfunction_short H 3 He H 0.0046 -1.000 4.000 4.000
+# symfunction_short H 3 He H 0.0046  1.000 16.000 4.000
+# symfunction_short H 3 He H 0.0046 -1.000 16.000 4.000
+# symfunction_short H 3 He H 0.0100  1.000 1.000 4.000
+symfunction_short H 3 He H 0.0100 -1.000 1.000 4.000
+# symfunction_short H 3 He H 0.0100  1.000 4.000 4.000
+# symfunction_short H 3 He H 0.0100 -1.000 4.000 4.000
+# symfunction_short H 3 He H 0.0100  1.000 16.000 4.000
+# symfunction_short H 3 He H 0.0100 -1.000 16.000 4.000
+symfunction_short H 3 He H 0.0215  1.000 1.000 4.000
+# symfunction_short H 3 He H 0.0215 -1.000 1.000 4.000
+# symfunction_short H 3 He H 0.0215  1.000 4.000 4.000
+# symfunction_short H 3 He H 0.0215 -1.000 4.000 4.000
+# symfunction_short H 3 He H 0.0215  1.000 16.000 4.000
+# symfunction_short H 3 He H 0.0215 -1.000 16.000 4.000
+symfunction_short H 3 He H 0.0464  1.000 1.000 4.000
+# symfunction_short H 3 He H 0.0464 -1.000 1.000 4.000
+# symfunction_short H 3 He H 0.0464  1.000 4.000 4.000
+symfunction_short H 3 He H 0.0464 -1.000 4.000 4.000
+# symfunction_short H 3 He H 0.0464  1.000 16.000 4.000
+# symfunction_short H 3 He H 0.0464 -1.000 16.000 4.000
+symfunction_short H 3 He H 0.1000  1.000 1.000 4.000
+symfunction_short H 3 He H 0.1000 -1.000 1.000 4.000
+symfunction_short H 3 He H 0.1000  1.000 4.000 4.000
+symfunction_short H 3 He H 0.1000 -1.000 4.000 4.000
+# symfunction_short H 3 He H 0.1000  1.000 16.000 4.000
+# symfunction_short H 3 He H 0.1000 -1.000 16.000 4.000
+# symfunction_short H 3 He H 0.2154  1.000 1.000 4.000
+symfunction_short H 3 He H 0.2154 -1.000 1.000 4.000
+symfunction_short H 3 He H 0.2154  1.000 4.000 4.000
+symfunction_short H 3 He H 0.2154 -1.000 4.000 4.000
+# symfunction_short H 3 He H 0.2154  1.000 16.000 4.000
+# symfunction_short H 3 He H 0.2154 -1.000 16.000 4.000
+symfunction_short H 3 He H 0.4642  1.000 1.000 4.000
+symfunction_short H 3 He H 0.4642 -1.000 1.000 4.000
+symfunction_short H 3 He H 0.4642  1.000 4.000 4.000
+# symfunction_short H 3 He H 0.4642 -1.000 4.000 4.000
+# symfunction_short H 3 He H 0.4642  1.000 16.000 4.000
+# symfunction_short H 3 He H 0.4642 -1.000 16.000 4.000
+# symfunction_short H 3 He H 1.0000  1.000 1.000 4.000
+# symfunction_short H 3 He H 1.0000 -1.000 1.000 4.000
+# symfunction_short H 3 He H 1.0000  1.000 4.000 4.000
+# symfunction_short H 3 He H 1.0000 -1.000 4.000 4.000
+# symfunction_short H 3 He H 1.0000  1.000 16.000 4.000
+# symfunction_short H 3 He H 1.0000 -1.000 16.000 4.000
+# symfunctions for type H 3 H H
+symfunction_short H 3 H H 0.0010  1.000 1.000 4.000
+symfunction_short H 3 H H 0.0010 -1.000 1.000 4.000
+# symfunction_short H 3 H H 0.0010  1.000 4.000 4.000
+# symfunction_short H 3 H H 0.0010 -1.000 4.000 4.000
+symfunction_short H 3 H H 0.0010  1.000 16.000 4.000
+symfunction_short H 3 H H 0.0010 -1.000 16.000 4.000
+symfunction_short H 3 H H 0.0022  1.000 1.000 4.000
+symfunction_short H 3 H H 0.0022 -1.000 1.000 4.000
+symfunction_short H 3 H H 0.0022  1.000 4.000 4.000
+# symfunction_short H 3 H H 0.0022 -1.000 4.000 4.000
+# symfunction_short H 3 H H 0.0022  1.000 16.000 4.000
+# symfunction_short H 3 H H 0.0022 -1.000 16.000 4.000
+# symfunction_short H 3 H H 0.0046  1.000 1.000 4.000
+# symfunction_short H 3 H H 0.0046 -1.000 1.000 4.000
+# symfunction_short H 3 H H 0.0046  1.000 4.000 4.000
+# symfunction_short H 3 H H 0.0046 -1.000 4.000 4.000
+# symfunction_short H 3 H H 0.0046  1.000 16.000 4.000
+# symfunction_short H 3 H H 0.0046 -1.000 16.000 4.000
+# symfunction_short H 3 H H 0.0100  1.000 1.000 4.000
+# symfunction_short H 3 H H 0.0100 -1.000 1.000 4.000
+# symfunction_short H 3 H H 0.0100  1.000 4.000 4.000
+# symfunction_short H 3 H H 0.0100 -1.000 4.000 4.000
+# symfunction_short H 3 H H 0.0100  1.000 16.000 4.000
+# symfunction_short H 3 H H 0.0100 -1.000 16.000 4.000
+symfunction_short H 3 H H 0.0215  1.000 1.000 4.000
+symfunction_short H 3 H H 0.0215 -1.000 1.000 4.000
+symfunction_short H 3 H H 0.0215  1.000 4.000 4.000
+# symfunction_short H 3 H H 0.0215 -1.000 4.000 4.000
+symfunction_short H 3 H H 0.0215  1.000 16.000 4.000
+# symfunction_short H 3 H H 0.0215 -1.000 16.000 4.000
+symfunction_short H 3 H H 0.0464  1.000 1.000 4.000
+symfunction_short H 3 H H 0.0464 -1.000 1.000 4.000
+# symfunction_short H 3 H H 0.0464  1.000 4.000 4.000
+# symfunction_short H 3 H H 0.0464 -1.000 4.000 4.000
+# symfunction_short H 3 H H 0.0464  1.000 16.000 4.000
+symfunction_short H 3 H H 0.0464 -1.000 16.000 4.000
+symfunction_short H 3 H H 0.1000  1.000 1.000 4.000
+symfunction_short H 3 H H 0.1000 -1.000 1.000 4.000
+symfunction_short H 3 H H 0.1000  1.000 4.000 4.000
+symfunction_short H 3 H H 0.1000 -1.000 4.000 4.000
+symfunction_short H 3 H H 0.1000  1.000 16.000 4.000
+symfunction_short H 3 H H 0.1000 -1.000 16.000 4.000
+symfunction_short H 3 H H 0.2154  1.000 1.000 4.000
+symfunction_short H 3 H H 0.2154 -1.000 1.000 4.000
+# symfunction_short H 3 H H 0.2154  1.000 4.000 4.000
+symfunction_short H 3 H H 0.2154 -1.000 4.000 4.000
+symfunction_short H 3 H H 0.2154  1.000 16.000 4.000
+# symfunction_short H 3 H H 0.2154 -1.000 16.000 4.000
+# symfunction_short H 3 H H 0.4642  1.000 1.000 4.000
+symfunction_short H 3 H H 0.4642 -1.000 1.000 4.000
+# symfunction_short H 3 H H 0.4642  1.000 4.000 4.000
+symfunction_short H 3 H H 0.4642 -1.000 4.000 4.000
+symfunction_short H 3 H H 0.4642  1.000 16.000 4.000
+# symfunction_short H 3 H H 0.4642 -1.000 16.000 4.000
+symfunction_short H 3 H H 1.0000  1.000 1.000 4.000
+symfunction_short H 3 H H 1.0000 -1.000 1.000 4.000
+# symfunction_short H 3 H H 1.0000  1.000 4.000 4.000
+# symfunction_short H 3 H H 1.0000 -1.000 4.000 4.000
+# symfunction_short H 3 H H 1.0000  1.000 16.000 4.000
+# symfunction_short H 3 H H 1.0000 -1.000 16.000 4.000
+# symfunctions for type He 2 C
+# symfunction_short He 2 He 0.0278 0.000 6.000
+# symfunction_short He 2 He 0.0375 0.000 6.000
+# symfunction_short He 2 He 0.0506 0.000 6.000
+# symfunction_short He 2 He 0.0682 0.000 6.000
+# symfunction_short He 2 He 0.0921 0.000 6.000
+# symfunction_short He 2 He 0.1242 0.000 6.000
+# symfunction_short He 2 He 0.1676 0.000 6.000
+# symfunction_short He 2 He 0.2262 0.000 6.000
+# symfunction_short He 2 He 0.3052 0.000 6.000
+symfunction_short He 2 He 0.4117 0.000 6.000
+# symfunction_short He 2 He 0.5556 0.000 6.000
+# symfunction_short He 2 He 0.7496 0.000 6.000
+# symfunction_short He 2 He 1.0114 0.000 6.000
+# symfunction_short He 2 He 1.3647 0.000 6.000
+# symfunction_short He 2 He 1.8414 0.000 6.000
+# symfunction_short He 2 He 2.4845 0.000 6.000
+# symfunction_short He 2 He 3.3523 0.000 6.000
+# symfunction_short He 2 He 4.5232 0.000 6.000
+# symfunction_short He 2 He 6.1031 0.000 6.000
+# symfunction_short He 2 He 8.2348 0.000 6.000
+# symfunction_short He 2 He 11.1111 0.000 6.000
+# symfunction_short He 2 He 425.5476 0.300 6.000
+# symfunction_short He 2 He 315.3880 0.348 6.000
+# symfunction_short He 2 He 233.7449 0.405 6.000
+# symfunction_short He 2 He 173.2364 0.470 6.000
+# symfunction_short He 2 He 128.3915 0.546 6.000
+# symfunction_short He 2 He 95.1553 0.634 6.000
+# symfunction_short He 2 He 70.5229 0.737 6.000
+# symfunction_short He 2 He 52.2669 0.856 6.000
+# symfunction_short He 2 He 38.7368 0.994 6.000
+# symfunction_short He 2 He 28.7092 1.155 6.000
+# symfunction_short He 2 He 21.2774 1.342 6.000
+# symfunction_short He 2 He 15.7694 1.558 6.000
+# symfunction_short He 2 He 11.6872 1.810 6.000
+# symfunction_short He 2 He 8.6618 2.103 6.000
+# symfunction_short He 2 He 6.4196 2.443 6.000
+# symfunction_short He 2 He 4.7578 2.837 6.000
+# symfunction_short He 2 He 3.5261 3.296 6.000
+# symfunction_short He 2 He 2.6133 3.828 6.000
+# symfunction_short He 2 He 1.9368 4.447 6.000
+# symfunction_short He 2 He 1.4355 5.165 6.000
+# symfunctions for type He 2 H
+# symfunction_short He 2 H 0.0278 0.000 6.000
+# symfunction_short He 2 H 0.0375 0.000 6.000
+# symfunction_short He 2 H 0.0506 0.000 6.000
+# symfunction_short He 2 H 0.0682 0.000 6.000
+# symfunction_short He 2 H 0.0921 0.000 6.000
+# symfunction_short He 2 H 0.1242 0.000 6.000
+# symfunction_short He 2 H 0.1676 0.000 6.000
+# symfunction_short He 2 H 0.2262 0.000 6.000
+# symfunction_short He 2 H 0.3052 0.000 6.000
+# symfunction_short He 2 H 0.4117 0.000 6.000
+# symfunction_short He 2 H 0.5556 0.000 6.000
+# symfunction_short He 2 H 0.7496 0.000 6.000
+# symfunction_short He 2 H 1.0114 0.000 6.000
+# symfunction_short He 2 H 1.3647 0.000 6.000
+# symfunction_short He 2 H 1.8414 0.000 6.000
+# symfunction_short He 2 H 2.4845 0.000 6.000
+# symfunction_short He 2 H 3.3523 0.000 6.000
+# symfunction_short He 2 H 4.5232 0.000 6.000
+# symfunction_short He 2 H 6.1031 0.000 6.000
+# symfunction_short He 2 H 8.2348 0.000 6.000
+# symfunction_short He 2 H 11.1111 0.000 6.000
+# symfunction_short He 2 H 425.5476 0.300 6.000
+# symfunction_short He 2 H 315.3880 0.348 6.000
+# symfunction_short He 2 H 233.7449 0.405 6.000
+# symfunction_short He 2 H 173.2364 0.470 6.000
+# symfunction_short He 2 H 128.3915 0.546 6.000
+# symfunction_short He 2 H 95.1553 0.634 6.000
+# symfunction_short He 2 H 70.5229 0.737 6.000
+# symfunction_short He 2 H 52.2669 0.856 6.000
+# symfunction_short He 2 H 38.7368 0.994 6.000
+# symfunction_short He 2 H 28.7092 1.155 6.000
+# symfunction_short He 2 H 21.2774 1.342 6.000
+# symfunction_short He 2 H 15.7694 1.558 6.000
+# symfunction_short He 2 H 11.6872 1.810 6.000
+# symfunction_short He 2 H 8.6618 2.103 6.000
+# symfunction_short He 2 H 6.4196 2.443 6.000
+# symfunction_short He 2 H 4.7578 2.837 6.000
+# symfunction_short He 2 H 3.5261 3.296 6.000
+# symfunction_short He 2 H 2.6133 3.828 6.000
+# symfunction_short He 2 H 1.9368 4.447 6.000
+# symfunction_short He 2 H 1.4355 5.165 6.000
+# symfunctions for type H 2 C
+# symfunction_short H 2 He 0.0278 0.000 6.000
+# symfunction_short H 2 He 0.0375 0.000 6.000
+# symfunction_short H 2 He 0.0506 0.000 6.000
+# symfunction_short H 2 He 0.0682 0.000 6.000
+# symfunction_short H 2 He 0.0921 0.000 6.000
+# symfunction_short H 2 He 0.1242 0.000 6.000
+# symfunction_short H 2 He 0.1676 0.000 6.000
+# symfunction_short H 2 He 0.2262 0.000 6.000
+# symfunction_short H 2 He 0.3052 0.000 6.000
+# symfunction_short H 2 He 0.4117 0.000 6.000
+# symfunction_short H 2 He 0.5556 0.000 6.000
+# symfunction_short H 2 He 0.7496 0.000 6.000
+# symfunction_short H 2 He 1.0114 0.000 6.000
+# symfunction_short H 2 He 1.3647 0.000 6.000
+# symfunction_short H 2 He 1.8414 0.000 6.000
+# symfunction_short H 2 He 2.4845 0.000 6.000
+# symfunction_short H 2 He 3.3523 0.000 6.000
+# symfunction_short H 2 He 4.5232 0.000 6.000
+# symfunction_short H 2 He 6.1031 0.000 6.000
+# symfunction_short H 2 He 8.2348 0.000 6.000
+# symfunction_short H 2 He 11.1111 0.000 6.000
+# symfunction_short H 2 He 425.5476 0.300 6.000
+# symfunction_short H 2 He 315.3880 0.348 6.000
+# symfunction_short H 2 He 233.7449 0.405 6.000
+# symfunction_short H 2 He 173.2364 0.470 6.000
+# symfunction_short H 2 He 128.3915 0.546 6.000
+# symfunction_short H 2 He 95.1553 0.634 6.000
+# symfunction_short H 2 He 70.5229 0.737 6.000
+# symfunction_short H 2 He 52.2669 0.856 6.000
+# symfunction_short H 2 He 38.7368 0.994 6.000
+# symfunction_short H 2 He 28.7092 1.155 6.000
+# symfunction_short H 2 He 21.2774 1.342 6.000
+# symfunction_short H 2 He 15.7694 1.558 6.000
+# symfunction_short H 2 He 11.6872 1.810 6.000
+# symfunction_short H 2 He 8.6618 2.103 6.000
+# symfunction_short H 2 He 6.4196 2.443 6.000
+# symfunction_short H 2 He 4.7578 2.837 6.000
+# symfunction_short H 2 He 3.5261 3.296 6.000
+# symfunction_short H 2 He 2.6133 3.828 6.000
+# symfunction_short H 2 He 1.9368 4.447 6.000
+# symfunction_short H 2 He 1.4355 5.165 6.000
+# symfunctions for type H 2 H
+# symfunction_short H 2 H 0.0278 0.000 6.000
+symfunction_short H 2 H 0.0375 0.000 6.000
+symfunction_short H 2 H 0.0506 0.000 6.000
+# symfunction_short H 2 H 0.0682 0.000 6.000
+# symfunction_short H 2 H 0.0921 0.000 6.000
+# symfunction_short H 2 H 0.1242 0.000 6.000
+# symfunction_short H 2 H 0.1676 0.000 6.000
+# symfunction_short H 2 H 0.2262 0.000 6.000
+# symfunction_short H 2 H 0.3052 0.000 6.000
+# symfunction_short H 2 H 0.4117 0.000 6.000
+# symfunction_short H 2 H 0.5556 0.000 6.000
+# symfunction_short H 2 H 0.7496 0.000 6.000
+# symfunction_short H 2 H 1.0114 0.000 6.000
+# symfunction_short H 2 H 1.3647 0.000 6.000
+# symfunction_short H 2 H 1.8414 0.000 6.000
+# symfunction_short H 2 H 2.4845 0.000 6.000
+# symfunction_short H 2 H 3.3523 0.000 6.000
+# symfunction_short H 2 H 4.5232 0.000 6.000
+# symfunction_short H 2 H 6.1031 0.000 6.000
+# symfunction_short H 2 H 8.2348 0.000 6.000
+# symfunction_short H 2 H 11.1111 0.000 6.000
+# symfunction_short H 2 H 425.5476 0.300 6.000
+# symfunction_short H 2 H 315.3880 0.348 6.000
+# symfunction_short H 2 H 233.7449 0.405 6.000
+# symfunction_short H 2 H 173.2364 0.470 6.000
+# symfunction_short H 2 H 128.3915 0.546 6.000
+# symfunction_short H 2 H 95.1553 0.634 6.000
+# symfunction_short H 2 H 70.5229 0.737 6.000
+# symfunction_short H 2 H 52.2669 0.856 6.000
+# symfunction_short H 2 H 38.7368 0.994 6.000
+# symfunction_short H 2 H 28.7092 1.155 6.000
+# symfunction_short H 2 H 21.2774 1.342 6.000
+# symfunction_short H 2 H 15.7694 1.558 6.000
+# symfunction_short H 2 H 11.6872 1.810 6.000
+# symfunction_short H 2 H 8.6618 2.103 6.000
+# symfunction_short H 2 H 6.4196 2.443 6.000
+# symfunction_short H 2 H 4.7578 2.837 6.000
+# symfunction_short H 2 H 3.5261 3.296 6.000
+# symfunction_short H 2 H 2.6133 3.828 6.000
+# symfunction_short H 2 H 1.9368 4.447 6.000
+# symfunction_short H 2 H 1.4355 5.165 6.000
+# symfunctions for type He 3 He C
+# symfunction_short He 3 He He 0.0010  1.000 1.000 6.000
+# symfunction_short He 3 He He 0.0010 -1.000 1.000 6.000
+symfunction_short He 3 He He 0.0010  1.000 4.000 6.000
+# symfunction_short He 3 He He 0.0010 -1.000 4.000 6.000
+# symfunction_short He 3 He He 0.0010  1.000 16.000 6.000
+# symfunction_short He 3 He He 0.0010 -1.000 16.000 6.000
+# symfunction_short He 3 He He 0.0022  1.000 1.000 6.000
+# symfunction_short He 3 He He 0.0022 -1.000 1.000 6.000
+# symfunction_short He 3 He He 0.0022  1.000 4.000 6.000
+symfunction_short He 3 He He 0.0022 -1.000 4.000 6.000
+# symfunction_short He 3 He He 0.0022  1.000 16.000 6.000
+# symfunction_short He 3 He He 0.0022 -1.000 16.000 6.000
+# symfunction_short He 3 He He 0.0046  1.000 1.000 6.000
+# symfunction_short He 3 He He 0.0046 -1.000 1.000 6.000
+# symfunction_short He 3 He He 0.0046  1.000 4.000 6.000
+# symfunction_short He 3 He He 0.0046 -1.000 4.000 6.000
+# symfunction_short He 3 He He 0.0046  1.000 16.000 6.000
+# symfunction_short He 3 He He 0.0046 -1.000 16.000 6.000
+# symfunction_short He 3 He He 0.0100  1.000 1.000 6.000
+# symfunction_short He 3 He He 0.0100 -1.000 1.000 6.000
+symfunction_short He 3 He He 0.0100  1.000 4.000 6.000
+# symfunction_short He 3 He He 0.0100 -1.000 4.000 6.000
+# symfunction_short He 3 He He 0.0100  1.000 16.000 6.000
+# symfunction_short He 3 He He 0.0100 -1.000 16.000 6.000
+symfunction_short He 3 He He 0.0215  1.000 1.000 6.000
+# symfunction_short He 3 He He 0.0215 -1.000 1.000 6.000
+# symfunction_short He 3 He He 0.0215  1.000 4.000 6.000
+# symfunction_short He 3 He He 0.0215 -1.000 4.000 6.000
+# symfunction_short He 3 He He 0.0215  1.000 16.000 6.000
+# symfunction_short He 3 He He 0.0215 -1.000 16.000 6.000
+symfunction_short He 3 He He 0.0464  1.000 1.000 6.000
+symfunction_short He 3 He He 0.0464 -1.000 1.000 6.000
+symfunction_short He 3 He He 0.0464  1.000 4.000 6.000
+# symfunction_short He 3 He He 0.0464 -1.000 4.000 6.000
+# symfunction_short He 3 He He 0.0464  1.000 16.000 6.000
+# symfunction_short He 3 He He 0.0464 -1.000 16.000 6.000
+# symfunction_short He 3 He He 0.1000  1.000 1.000 6.000
+# symfunction_short He 3 He He 0.1000 -1.000 1.000 6.000
+symfunction_short He 3 He He 0.1000  1.000 4.000 6.000
+# symfunction_short He 3 He He 0.1000 -1.000 4.000 6.000
+# symfunction_short He 3 He He 0.1000  1.000 16.000 6.000
+# symfunction_short He 3 He He 0.1000 -1.000 16.000 6.000
+symfunction_short He 3 He He 0.2154  1.000 1.000 6.000
+symfunction_short He 3 He He 0.2154 -1.000 1.000 6.000
+# symfunction_short He 3 He He 0.2154  1.000 4.000 6.000
+# symfunction_short He 3 He He 0.2154 -1.000 4.000 6.000
+# symfunction_short He 3 He He 0.2154  1.000 16.000 6.000
+# symfunction_short He 3 He He 0.2154 -1.000 16.000 6.000
+symfunction_short He 3 He He 0.4642  1.000 1.000 6.000
+symfunction_short He 3 He He 0.4642 -1.000 1.000 6.000
+symfunction_short He 3 He He 0.4642  1.000 4.000 6.000
+# symfunction_short He 3 He He 0.4642 -1.000 4.000 6.000
+# symfunction_short He 3 He He 0.4642  1.000 16.000 6.000
+# symfunction_short He 3 He He 0.4642 -1.000 16.000 6.000
+# symfunction_short He 3 He He 1.0000  1.000 1.000 6.000
+# symfunction_short He 3 He He 1.0000 -1.000 1.000 6.000
+# symfunction_short He 3 He He 1.0000  1.000 4.000 6.000
+# symfunction_short He 3 He He 1.0000 -1.000 4.000 6.000
+# symfunction_short He 3 He He 1.0000  1.000 16.000 6.000
+# symfunction_short He 3 He He 1.0000 -1.000 16.000 6.000
+# symfunctions for type He 3 He H
+# symfunction_short He 3 He H 0.0010  1.000 1.000 6.000
+# symfunction_short He 3 He H 0.0010 -1.000 1.000 6.000
+# symfunction_short He 3 He H 0.0010  1.000 4.000 6.000
+# symfunction_short He 3 He H 0.0010 -1.000 4.000 6.000
+symfunction_short He 3 He H 0.0010  1.000 16.000 6.000
+# symfunction_short He 3 He H 0.0010 -1.000 16.000 6.000
+symfunction_short He 3 He H 0.0022  1.000 1.000 6.000
+# symfunction_short He 3 He H 0.0022 -1.000 1.000 6.000
+# symfunction_short He 3 He H 0.0022  1.000 4.000 6.000
+# symfunction_short He 3 He H 0.0022 -1.000 4.000 6.000
+# symfunction_short He 3 He H 0.0022  1.000 16.000 6.000
+# symfunction_short He 3 He H 0.0022 -1.000 16.000 6.000
+# symfunction_short He 3 He H 0.0046  1.000 1.000 6.000
+# symfunction_short He 3 He H 0.0046 -1.000 1.000 6.000
+symfunction_short He 3 He H 0.0046  1.000 4.000 6.000
+# symfunction_short He 3 He H 0.0046 -1.000 4.000 6.000
+# symfunction_short He 3 He H 0.0046  1.000 16.000 6.000
+# symfunction_short He 3 He H 0.0046 -1.000 16.000 6.000
+# symfunction_short He 3 He H 0.0100  1.000 1.000 6.000
+# symfunction_short He 3 He H 0.0100 -1.000 1.000 6.000
+# symfunction_short He 3 He H 0.0100  1.000 4.000 6.000
+# symfunction_short He 3 He H 0.0100 -1.000 4.000 6.000
+# symfunction_short He 3 He H 0.0100  1.000 16.000 6.000
+# symfunction_short He 3 He H 0.0100 -1.000 16.000 6.000
+symfunction_short He 3 He H 0.0215  1.000 1.000 6.000
+symfunction_short He 3 He H 0.0215 -1.000 1.000 6.000
+# symfunction_short He 3 He H 0.0215  1.000 4.000 6.000
+# symfunction_short He 3 He H 0.0215 -1.000 4.000 6.000
+symfunction_short He 3 He H 0.0215  1.000 16.000 6.000
+# symfunction_short He 3 He H 0.0215 -1.000 16.000 6.000
+symfunction_short He 3 He H 0.0464  1.000 1.000 6.000
+symfunction_short He 3 He H 0.0464 -1.000 1.000 6.000
+symfunction_short He 3 He H 0.0464  1.000 4.000 6.000
+symfunction_short He 3 He H 0.0464 -1.000 4.000 6.000
+symfunction_short He 3 He H 0.0464  1.000 16.000 6.000
+# symfunction_short He 3 He H 0.0464 -1.000 16.000 6.000
+# symfunction_short He 3 He H 0.1000  1.000 1.000 6.000
+# symfunction_short He 3 He H 0.1000 -1.000 1.000 6.000
+symfunction_short He 3 He H 0.1000  1.000 4.000 6.000
+symfunction_short He 3 He H 0.1000 -1.000 4.000 6.000
+symfunction_short He 3 He H 0.1000  1.000 16.000 6.000
+# symfunction_short He 3 He H 0.1000 -1.000 16.000 6.000
+symfunction_short He 3 He H 0.2154  1.000 1.000 6.000
+# symfunction_short He 3 He H 0.2154 -1.000 1.000 6.000
+# symfunction_short He 3 He H 0.2154  1.000 4.000 6.000
+# symfunction_short He 3 He H 0.2154 -1.000 4.000 6.000
+symfunction_short He 3 He H 0.2154  1.000 16.000 6.000
+# symfunction_short He 3 He H 0.2154 -1.000 16.000 6.000
+symfunction_short He 3 He H 0.4642  1.000 1.000 6.000
+# symfunction_short He 3 He H 0.4642 -1.000 1.000 6.000
+# symfunction_short He 3 He H 0.4642  1.000 4.000 6.000
+# symfunction_short He 3 He H 0.4642 -1.000 4.000 6.000
+symfunction_short He 3 He H 0.4642  1.000 16.000 6.000
+# symfunction_short He 3 He H 0.4642 -1.000 16.000 6.000
+# symfunction_short He 3 He H 1.0000  1.000 1.000 6.000
+# symfunction_short He 3 He H 1.0000 -1.000 1.000 6.000
+# symfunction_short He 3 He H 1.0000  1.000 4.000 6.000
+# symfunction_short He 3 He H 1.0000 -1.000 4.000 6.000
+# symfunction_short He 3 He H 1.0000  1.000 16.000 6.000
+# symfunction_short He 3 He H 1.0000 -1.000 16.000 6.000
+# symfunctions for type He 3 H H
+# symfunction_short He 3 H H 0.0010  1.000 1.000 6.000
+symfunction_short He 3 H H 0.0010 -1.000 1.000 6.000
+# symfunction_short He 3 H H 0.0010  1.000 4.000 6.000
+# symfunction_short He 3 H H 0.0010 -1.000 4.000 6.000
+# symfunction_short He 3 H H 0.0010  1.000 16.000 6.000
+# symfunction_short He 3 H H 0.0010 -1.000 16.000 6.000
+# symfunction_short He 3 H H 0.0022  1.000 1.000 6.000
+symfunction_short He 3 H H 0.0022 -1.000 1.000 6.000
+symfunction_short He 3 H H 0.0022  1.000 4.000 6.000
+# symfunction_short He 3 H H 0.0022 -1.000 4.000 6.000
+symfunction_short He 3 H H 0.0022  1.000 16.000 6.000
+# symfunction_short He 3 H H 0.0022 -1.000 16.000 6.000
+symfunction_short He 3 H H 0.0046  1.000 1.000 6.000
+# symfunction_short He 3 H H 0.0046 -1.000 1.000 6.000
+symfunction_short He 3 H H 0.0046  1.000 4.000 6.000
+# symfunction_short He 3 H H 0.0046 -1.000 4.000 6.000
+# symfunction_short He 3 H H 0.0046  1.000 16.000 6.000
+# symfunction_short He 3 H H 0.0046 -1.000 16.000 6.000
+symfunction_short He 3 H H 0.0100  1.000 1.000 6.000
+# symfunction_short He 3 H H 0.0100 -1.000 1.000 6.000
+symfunction_short He 3 H H 0.0100  1.000 4.000 6.000
+# symfunction_short He 3 H H 0.0100 -1.000 4.000 6.000
+# symfunction_short He 3 H H 0.0100  1.000 16.000 6.000
+# symfunction_short He 3 H H 0.0100 -1.000 16.000 6.000
+symfunction_short He 3 H H 0.0215  1.000 1.000 6.000
+symfunction_short He 3 H H 0.0215 -1.000 1.000 6.000
+symfunction_short He 3 H H 0.0215  1.000 4.000 6.000
+symfunction_short He 3 H H 0.0215 -1.000 4.000 6.000
+# symfunction_short He 3 H H 0.0215  1.000 16.000 6.000
+# symfunction_short He 3 H H 0.0215 -1.000 16.000 6.000
+symfunction_short He 3 H H 0.0464  1.000 1.000 6.000
+symfunction_short He 3 H H 0.0464 -1.000 1.000 6.000
+symfunction_short He 3 H H 0.0464  1.000 4.000 6.000
+# symfunction_short He 3 H H 0.0464 -1.000 4.000 6.000
+symfunction_short He 3 H H 0.0464  1.000 16.000 6.000
+# symfunction_short He 3 H H 0.0464 -1.000 16.000 6.000
+symfunction_short He 3 H H 0.1000  1.000 1.000 6.000
+symfunction_short He 3 H H 0.1000 -1.000 1.000 6.000
+symfunction_short He 3 H H 0.1000  1.000 4.000 6.000
+symfunction_short He 3 H H 0.1000 -1.000 4.000 6.000
+symfunction_short He 3 H H 0.1000  1.000 16.000 6.000
+# symfunction_short He 3 H H 0.1000 -1.000 16.000 6.000
+symfunction_short He 3 H H 0.2154  1.000 1.000 6.000
+symfunction_short He 3 H H 0.2154 -1.000 1.000 6.000
+symfunction_short He 3 H H 0.2154  1.000 4.000 6.000
+symfunction_short He 3 H H 0.2154 -1.000 4.000 6.000
+symfunction_short He 3 H H 0.2154  1.000 16.000 6.000
+# symfunction_short He 3 H H 0.2154 -1.000 16.000 6.000
+symfunction_short He 3 H H 0.4642  1.000 1.000 6.000
+# symfunction_short He 3 H H 0.4642 -1.000 1.000 6.000
+# symfunction_short He 3 H H 0.4642  1.000 4.000 6.000
+# symfunction_short He 3 H H 0.4642 -1.000 4.000 6.000
+# symfunction_short He 3 H H 0.4642  1.000 16.000 6.000
+# symfunction_short He 3 H H 0.4642 -1.000 16.000 6.000
+symfunction_short He 3 H H 1.0000  1.000 1.000 6.000
+symfunction_short He 3 H H 1.0000 -1.000 1.000 6.000
+symfunction_short He 3 H H 1.0000  1.000 4.000 6.000
+# symfunction_short He 3 H H 1.0000 -1.000 4.000 6.000
+# symfunction_short He 3 H H 1.0000  1.000 16.000 6.000
+# symfunction_short He 3 H H 1.0000 -1.000 16.000 6.000
+# symfunctions for type H 3 He C
+# symfunction_short H 3 He He 0.0010  1.000 1.000 6.000
+# symfunction_short H 3 He He 0.0010 -1.000 1.000 6.000
+# symfunction_short H 3 He He 0.0010  1.000 4.000 6.000
+# symfunction_short H 3 He He 0.0010 -1.000 4.000 6.000
+# symfunction_short H 3 He He 0.0010  1.000 16.000 6.000
+# symfunction_short H 3 He He 0.0010 -1.000 16.000 6.000
+# symfunction_short H 3 He He 0.0022  1.000 1.000 6.000
+# symfunction_short H 3 He He 0.0022 -1.000 1.000 6.000
+# symfunction_short H 3 He He 0.0022  1.000 4.000 6.000
+# symfunction_short H 3 He He 0.0022 -1.000 4.000 6.000
+# symfunction_short H 3 He He 0.0022  1.000 16.000 6.000
+# symfunction_short H 3 He He 0.0022 -1.000 16.000 6.000
+# symfunction_short H 3 He He 0.0046  1.000 1.000 6.000
+# symfunction_short H 3 He He 0.0046 -1.000 1.000 6.000
+# symfunction_short H 3 He He 0.0046  1.000 4.000 6.000
+# symfunction_short H 3 He He 0.0046 -1.000 4.000 6.000
+# symfunction_short H 3 He He 0.0046  1.000 16.000 6.000
+# symfunction_short H 3 He He 0.0046 -1.000 16.000 6.000
+# symfunction_short H 3 He He 0.0100  1.000 1.000 6.000
+# symfunction_short H 3 He He 0.0100 -1.000 1.000 6.000
+# symfunction_short H 3 He He 0.0100  1.000 4.000 6.000
+# symfunction_short H 3 He He 0.0100 -1.000 4.000 6.000
+# symfunction_short H 3 He He 0.0100  1.000 16.000 6.000
+# symfunction_short H 3 He He 0.0100 -1.000 16.000 6.000
+# symfunction_short H 3 He He 0.0215  1.000 1.000 6.000
+# symfunction_short H 3 He He 0.0215 -1.000 1.000 6.000
+# symfunction_short H 3 He He 0.0215  1.000 4.000 6.000
+# symfunction_short H 3 He He 0.0215 -1.000 4.000 6.000
+# symfunction_short H 3 He He 0.0215  1.000 16.000 6.000
+# symfunction_short H 3 He He 0.0215 -1.000 16.000 6.000
+symfunction_short H 3 He He 0.0464  1.000 1.000 6.000
+symfunction_short H 3 He He 0.0464 -1.000 1.000 6.000
+# symfunction_short H 3 He He 0.0464  1.000 4.000 6.000
+# symfunction_short H 3 He He 0.0464 -1.000 4.000 6.000
+# symfunction_short H 3 He He 0.0464  1.000 16.000 6.000
+# symfunction_short H 3 He He 0.0464 -1.000 16.000 6.000
+# symfunction_short H 3 He He 0.1000  1.000 1.000 6.000
+symfunction_short H 3 He He 0.1000 -1.000 1.000 6.000
+symfunction_short H 3 He He 0.1000  1.000 4.000 6.000
+# symfunction_short H 3 He He 0.1000 -1.000 4.000 6.000
+# symfunction_short H 3 He He 0.1000  1.000 16.000 6.000
+# symfunction_short H 3 He He 0.1000 -1.000 16.000 6.000
+# symfunction_short H 3 He He 0.2154  1.000 1.000 6.000
+symfunction_short H 3 He He 0.2154 -1.000 1.000 6.000
+symfunction_short H 3 He He 0.2154  1.000 4.000 6.000
+# symfunction_short H 3 He He 0.2154 -1.000 4.000 6.000
+# symfunction_short H 3 He He 0.2154  1.000 16.000 6.000
+# symfunction_short H 3 He He 0.2154 -1.000 16.000 6.000
+# symfunction_short H 3 He He 0.4642  1.000 1.000 6.000
+# symfunction_short H 3 He He 0.4642 -1.000 1.000 6.000
+# symfunction_short H 3 He He 0.4642  1.000 4.000 6.000
+# symfunction_short H 3 He He 0.4642 -1.000 4.000 6.000
+# symfunction_short H 3 He He 0.4642  1.000 16.000 6.000
+# symfunction_short H 3 He He 0.4642 -1.000 16.000 6.000
+# symfunction_short H 3 He He 1.0000  1.000 1.000 6.000
+# symfunction_short H 3 He He 1.0000 -1.000 1.000 6.000
+# symfunction_short H 3 He He 1.0000  1.000 4.000 6.000
+# symfunction_short H 3 He He 1.0000 -1.000 4.000 6.000
+# symfunction_short H 3 He He 1.0000  1.000 16.000 6.000
+# symfunction_short H 3 He He 1.0000 -1.000 16.000 6.000
+# symfunctions for type H 3 He H
+# symfunction_short H 3 He H 0.0010  1.000 1.000 6.000
+symfunction_short H 3 He H 0.0010 -1.000 1.000 6.000
+symfunction_short H 3 He H 0.0010  1.000 4.000 6.000
+# symfunction_short H 3 He H 0.0010 -1.000 4.000 6.000
+# symfunction_short H 3 He H 0.0010  1.000 16.000 6.000
+# symfunction_short H 3 He H 0.0010 -1.000 16.000 6.000
+# symfunction_short H 3 He H 0.0022  1.000 1.000 6.000
+# symfunction_short H 3 He H 0.0022 -1.000 1.000 6.000
+# symfunction_short H 3 He H 0.0022  1.000 4.000 6.000
+# symfunction_short H 3 He H 0.0022 -1.000 4.000 6.000
+# symfunction_short H 3 He H 0.0022  1.000 16.000 6.000
+# symfunction_short H 3 He H 0.0022 -1.000 16.000 6.000
+# symfunction_short H 3 He H 0.0046  1.000 1.000 6.000
+# symfunction_short H 3 He H 0.0046 -1.000 1.000 6.000
+# symfunction_short H 3 He H 0.0046  1.000 4.000 6.000
+# symfunction_short H 3 He H 0.0046 -1.000 4.000 6.000
+# symfunction_short H 3 He H 0.0046  1.000 16.000 6.000
+# symfunction_short H 3 He H 0.0046 -1.000 16.000 6.000
+# symfunction_short H 3 He H 0.0100  1.000 1.000 6.000
+# symfunction_short H 3 He H 0.0100 -1.000 1.000 6.000
+# symfunction_short H 3 He H 0.0100  1.000 4.000 6.000
+# symfunction_short H 3 He H 0.0100 -1.000 4.000 6.000
+# symfunction_short H 3 He H 0.0100  1.000 16.000 6.000
+# symfunction_short H 3 He H 0.0100 -1.000 16.000 6.000
+# symfunction_short H 3 He H 0.0215  1.000 1.000 6.000
+symfunction_short H 3 He H 0.0215 -1.000 1.000 6.000
+# symfunction_short H 3 He H 0.0215  1.000 4.000 6.000
+# symfunction_short H 3 He H 0.0215 -1.000 4.000 6.000
+# symfunction_short H 3 He H 0.0215  1.000 16.000 6.000
+# symfunction_short H 3 He H 0.0215 -1.000 16.000 6.000
+symfunction_short H 3 He H 0.0464  1.000 1.000 6.000
+# symfunction_short H 3 He H 0.0464 -1.000 1.000 6.000
+symfunction_short H 3 He H 0.0464  1.000 4.000 6.000
+symfunction_short H 3 He H 0.0464 -1.000 4.000 6.000
+symfunction_short H 3 He H 0.0464  1.000 16.000 6.000
+# symfunction_short H 3 He H 0.0464 -1.000 16.000 6.000
+symfunction_short H 3 He H 0.1000  1.000 1.000 6.000
+symfunction_short H 3 He H 0.1000 -1.000 1.000 6.000
+symfunction_short H 3 He H 0.1000  1.000 4.000 6.000
+symfunction_short H 3 He H 0.1000 -1.000 4.000 6.000
+symfunction_short H 3 He H 0.1000  1.000 16.000 6.000
+# symfunction_short H 3 He H 0.1000 -1.000 16.000 6.000
+symfunction_short H 3 He H 0.2154  1.000 1.000 6.000
+symfunction_short H 3 He H 0.2154 -1.000 1.000 6.000
+symfunction_short H 3 He H 0.2154  1.000 4.000 6.000
+symfunction_short H 3 He H 0.2154 -1.000 4.000 6.000
+symfunction_short H 3 He H 0.2154  1.000 16.000 6.000
+# symfunction_short H 3 He H 0.2154 -1.000 16.000 6.000
+symfunction_short H 3 He H 0.4642  1.000 1.000 6.000
+symfunction_short H 3 He H 0.4642 -1.000 1.000 6.000
+symfunction_short H 3 He H 0.4642  1.000 4.000 6.000
+# symfunction_short H 3 He H 0.4642 -1.000 4.000 6.000
+# symfunction_short H 3 He H 0.4642  1.000 16.000 6.000
+# symfunction_short H 3 He H 0.4642 -1.000 16.000 6.000
+# symfunction_short H 3 He H 1.0000  1.000 1.000 6.000
+# symfunction_short H 3 He H 1.0000 -1.000 1.000 6.000
+# symfunction_short H 3 He H 1.0000  1.000 4.000 6.000
+# symfunction_short H 3 He H 1.0000 -1.000 4.000 6.000
+# symfunction_short H 3 He H 1.0000  1.000 16.000 6.000
+# symfunction_short H 3 He H 1.0000 -1.000 16.000 6.000
+# symfunctions for type H 3 H H
+symfunction_short H 3 H H 0.0010  1.000 1.000 6.000
+# symfunction_short H 3 H H 0.0010 -1.000 1.000 6.000
+symfunction_short H 3 H H 0.0010  1.000 4.000 6.000
+# symfunction_short H 3 H H 0.0010 -1.000 4.000 6.000
+symfunction_short H 3 H H 0.0010  1.000 16.000 6.000
+# symfunction_short H 3 H H 0.0010 -1.000 16.000 6.000
+symfunction_short H 3 H H 0.0022  1.000 1.000 6.000
+symfunction_short H 3 H H 0.0022 -1.000 1.000 6.000
+symfunction_short H 3 H H 0.0022  1.000 4.000 6.000
+# symfunction_short H 3 H H 0.0022 -1.000 4.000 6.000
+symfunction_short H 3 H H 0.0022  1.000 16.000 6.000
+# symfunction_short H 3 H H 0.0022 -1.000 16.000 6.000
+symfunction_short H 3 H H 0.0046  1.000 1.000 6.000
+symfunction_short H 3 H H 0.0046 -1.000 1.000 6.000
+symfunction_short H 3 H H 0.0046  1.000 4.000 6.000
+symfunction_short H 3 H H 0.0046 -1.000 4.000 6.000
+symfunction_short H 3 H H 0.0046  1.000 16.000 6.000
+# symfunction_short H 3 H H 0.0046 -1.000 16.000 6.000
+symfunction_short H 3 H H 0.0100  1.000 1.000 6.000
+symfunction_short H 3 H H 0.0100 -1.000 1.000 6.000
+# symfunction_short H 3 H H 0.0100  1.000 4.000 6.000
+symfunction_short H 3 H H 0.0100 -1.000 4.000 6.000
+symfunction_short H 3 H H 0.0100  1.000 16.000 6.000
+# symfunction_short H 3 H H 0.0100 -1.000 16.000 6.000
+symfunction_short H 3 H H 0.0215  1.000 1.000 6.000
+# symfunction_short H 3 H H 0.0215 -1.000 1.000 6.000
+# symfunction_short H 3 H H 0.0215  1.000 4.000 6.000
+# symfunction_short H 3 H H 0.0215 -1.000 4.000 6.000
+symfunction_short H 3 H H 0.0215  1.000 16.000 6.000
+# symfunction_short H 3 H H 0.0215 -1.000 16.000 6.000
+symfunction_short H 3 H H 0.0464  1.000 1.000 6.000
+# symfunction_short H 3 H H 0.0464 -1.000 1.000 6.000
+symfunction_short H 3 H H 0.0464  1.000 4.000 6.000
+symfunction_short H 3 H H 0.0464 -1.000 4.000 6.000
+symfunction_short H 3 H H 0.0464  1.000 16.000 6.000
+# symfunction_short H 3 H H 0.0464 -1.000 16.000 6.000
+symfunction_short H 3 H H 0.1000  1.000 1.000 6.000
+symfunction_short H 3 H H 0.1000 -1.000 1.000 6.000
+symfunction_short H 3 H H 0.1000  1.000 4.000 6.000
+symfunction_short H 3 H H 0.1000 -1.000 4.000 6.000
+symfunction_short H 3 H H 0.1000  1.000 16.000 6.000
+# symfunction_short H 3 H H 0.1000 -1.000 16.000 6.000
+symfunction_short H 3 H H 0.2154  1.000 1.000 6.000
+symfunction_short H 3 H H 0.2154 -1.000 1.000 6.000
+# symfunction_short H 3 H H 0.2154  1.000 4.000 6.000
+symfunction_short H 3 H H 0.2154 -1.000 4.000 6.000
+symfunction_short H 3 H H 0.2154  1.000 16.000 6.000
+symfunction_short H 3 H H 0.2154 -1.000 16.000 6.000
+symfunction_short H 3 H H 0.4642  1.000 1.000 6.000
+symfunction_short H 3 H H 0.4642 -1.000 1.000 6.000
+# symfunction_short H 3 H H 0.4642  1.000 4.000 6.000
+symfunction_short H 3 H H 0.4642 -1.000 4.000 6.000
+# symfunction_short H 3 H H 0.4642  1.000 16.000 6.000
+# symfunction_short H 3 H H 0.4642 -1.000 16.000 6.000
+symfunction_short H 3 H H 1.0000  1.000 1.000 6.000
+symfunction_short H 3 H H 1.0000 -1.000 1.000 6.000
+# symfunction_short H 3 H H 1.0000  1.000 4.000 6.000
+# symfunction_short H 3 H H 1.0000 -1.000 4.000 6.000
+# symfunction_short H 3 H H 1.0000  1.000 16.000 6.000
+# symfunction_short H 3 H H 1.0000 -1.000 16.000 6.000
+# symfunctions for type He 2 C
+# symfunction_short He 2 He 0.0156 0.000 8.000
+# symfunction_short He 2 He 0.0211 0.000 8.000
+# symfunction_short He 2 He 0.0284 0.000 8.000
+# symfunction_short He 2 He 0.0384 0.000 8.000
+# symfunction_short He 2 He 0.0518 0.000 8.000
+# symfunction_short He 2 He 0.0699 0.000 8.000
+# symfunction_short He 2 He 0.0943 0.000 8.000
+# symfunction_short He 2 He 0.1272 0.000 8.000
+# symfunction_short He 2 He 0.1717 0.000 8.000
+# symfunction_short He 2 He 0.2316 0.000 8.000
+# symfunction_short He 2 He 0.3125 0.000 8.000
+# symfunction_short He 2 He 0.4217 0.000 8.000
+# symfunction_short He 2 He 0.5689 0.000 8.000
+# symfunction_short He 2 He 0.7676 0.000 8.000
+# symfunction_short He 2 He 1.0358 0.000 8.000
+# symfunction_short He 2 He 1.3975 0.000 8.000
+# symfunction_short He 2 He 1.8857 0.000 8.000
+# symfunction_short He 2 He 2.5443 0.000 8.000
+# symfunction_short He 2 He 3.4330 0.000 8.000
+# symfunction_short He 2 He 4.6321 0.000 8.000
+# symfunction_short He 2 He 6.2500 0.000 8.000
+# symfunction_short He 2 He 239.3705 0.400 8.000
+# symfunction_short He 2 He 177.4057 0.465 8.000
+# symfunction_short He 2 He 131.4815 0.540 8.000
+# symfunction_short He 2 He 97.4455 0.627 8.000
+# symfunction_short He 2 He 72.2202 0.728 8.000
+# symfunction_short He 2 He 53.5249 0.846 8.000
+# symfunction_short He 2 He 39.6691 0.983 8.000
+# symfunction_short He 2 He 29.4002 1.141 8.000
+# symfunction_short He 2 He 21.7895 1.326 8.000
+# symfunction_short He 2 He 16.1489 1.540 8.000
+# symfunction_short He 2 He 11.9685 1.789 8.000
+# symfunction_short He 2 He 8.8703 2.078 8.000
+# symfunction_short He 2 He 6.5741 2.414 8.000
+# symfunction_short He 2 He 4.8723 2.804 8.000
+# symfunction_short He 2 He 3.6110 3.257 8.000
+# symfunction_short He 2 He 2.6762 3.783 8.000
+# symfunction_short He 2 He 1.9835 4.394 8.000
+# symfunction_short He 2 He 1.4700 5.104 8.000
+# symfunction_short He 2 He 1.0895 5.929 8.000
+# symfunction_short He 2 He 0.8074 6.887 8.000
+# symfunctions for type He 2 H
+# symfunction_short He 2 H 0.0156 0.000 8.000
+# symfunction_short He 2 H 0.0211 0.000 8.000
+# symfunction_short He 2 H 0.0284 0.000 8.000
+# symfunction_short He 2 H 0.0384 0.000 8.000
+# symfunction_short He 2 H 0.0518 0.000 8.000
+# symfunction_short He 2 H 0.0699 0.000 8.000
+# symfunction_short He 2 H 0.0943 0.000 8.000
+# symfunction_short He 2 H 0.1272 0.000 8.000
+# symfunction_short He 2 H 0.1717 0.000 8.000
+# symfunction_short He 2 H 0.2316 0.000 8.000
+# symfunction_short He 2 H 0.3125 0.000 8.000
+# symfunction_short He 2 H 0.4217 0.000 8.000
+symfunction_short He 2 H 0.5689 0.000 8.000
+# symfunction_short He 2 H 0.7676 0.000 8.000
+# symfunction_short He 2 H 1.0358 0.000 8.000
+# symfunction_short He 2 H 1.3975 0.000 8.000
+# symfunction_short He 2 H 1.8857 0.000 8.000
+# symfunction_short He 2 H 2.5443 0.000 8.000
+# symfunction_short He 2 H 3.4330 0.000 8.000
+# symfunction_short He 2 H 4.6321 0.000 8.000
+# symfunction_short He 2 H 6.2500 0.000 8.000
+# symfunction_short He 2 H 239.3705 0.400 8.000
+# symfunction_short He 2 H 177.4057 0.465 8.000
+# symfunction_short He 2 H 131.4815 0.540 8.000
+# symfunction_short He 2 H 97.4455 0.627 8.000
+# symfunction_short He 2 H 72.2202 0.728 8.000
+# symfunction_short He 2 H 53.5249 0.846 8.000
+# symfunction_short He 2 H 39.6691 0.983 8.000
+# symfunction_short He 2 H 29.4002 1.141 8.000
+# symfunction_short He 2 H 21.7895 1.326 8.000
+# symfunction_short He 2 H 16.1489 1.540 8.000
+# symfunction_short He 2 H 11.9685 1.789 8.000
+# symfunction_short He 2 H 8.8703 2.078 8.000
+# symfunction_short He 2 H 6.5741 2.414 8.000
+# symfunction_short He 2 H 4.8723 2.804 8.000
+# symfunction_short He 2 H 3.6110 3.257 8.000
+# symfunction_short He 2 H 2.6762 3.783 8.000
+# symfunction_short He 2 H 1.9835 4.394 8.000
+# symfunction_short He 2 H 1.4700 5.104 8.000
+# symfunction_short He 2 H 1.0895 5.929 8.000
+# symfunction_short He 2 H 0.8074 6.887 8.000
+# symfunctions for type H 2 C
+# symfunction_short H 2 He 0.0156 0.000 8.000
+# symfunction_short H 2 He 0.0211 0.000 8.000
+# symfunction_short H 2 He 0.0284 0.000 8.000
+# symfunction_short H 2 He 0.0384 0.000 8.000
+# symfunction_short H 2 He 0.0518 0.000 8.000
+# symfunction_short H 2 He 0.0699 0.000 8.000
+# symfunction_short H 2 He 0.0943 0.000 8.000
+# symfunction_short H 2 He 0.1272 0.000 8.000
+# symfunction_short H 2 He 0.1717 0.000 8.000
+# symfunction_short H 2 He 0.2316 0.000 8.000
+# symfunction_short H 2 He 0.3125 0.000 8.000
+# symfunction_short H 2 He 0.4217 0.000 8.000
+# symfunction_short H 2 He 0.5689 0.000 8.000
+# symfunction_short H 2 He 0.7676 0.000 8.000
+# symfunction_short H 2 He 1.0358 0.000 8.000
+# symfunction_short H 2 He 1.3975 0.000 8.000
+# symfunction_short H 2 He 1.8857 0.000 8.000
+# symfunction_short H 2 He 2.5443 0.000 8.000
+# symfunction_short H 2 He 3.4330 0.000 8.000
+# symfunction_short H 2 He 4.6321 0.000 8.000
+# symfunction_short H 2 He 6.2500 0.000 8.000
+# symfunction_short H 2 He 239.3705 0.400 8.000
+# symfunction_short H 2 He 177.4057 0.465 8.000
+# symfunction_short H 2 He 131.4815 0.540 8.000
+# symfunction_short H 2 He 97.4455 0.627 8.000
+# symfunction_short H 2 He 72.2202 0.728 8.000
+# symfunction_short H 2 He 53.5249 0.846 8.000
+# symfunction_short H 2 He 39.6691 0.983 8.000
+# symfunction_short H 2 He 29.4002 1.141 8.000
+# symfunction_short H 2 He 21.7895 1.326 8.000
+# symfunction_short H 2 He 16.1489 1.540 8.000
+# symfunction_short H 2 He 11.9685 1.789 8.000
+# symfunction_short H 2 He 8.8703 2.078 8.000
+# symfunction_short H 2 He 6.5741 2.414 8.000
+# symfunction_short H 2 He 4.8723 2.804 8.000
+# symfunction_short H 2 He 3.6110 3.257 8.000
+# symfunction_short H 2 He 2.6762 3.783 8.000
+# symfunction_short H 2 He 1.9835 4.394 8.000
+# symfunction_short H 2 He 1.4700 5.104 8.000
+# symfunction_short H 2 He 1.0895 5.929 8.000
+# symfunction_short H 2 He 0.8074 6.887 8.000
+# symfunctions for type H 2 H
+# symfunction_short H 2 H 0.0156 0.000 8.000
+# symfunction_short H 2 H 0.0211 0.000 8.000
+symfunction_short H 2 H 0.0284 0.000 8.000
+symfunction_short H 2 H 0.0384 0.000 8.000
+# symfunction_short H 2 H 0.0518 0.000 8.000
+# symfunction_short H 2 H 0.0699 0.000 8.000
+# symfunction_short H 2 H 0.0943 0.000 8.000
+# symfunction_short H 2 H 0.1272 0.000 8.000
+symfunction_short H 2 H 0.1717 0.000 8.000
+# symfunction_short H 2 H 0.2316 0.000 8.000
+# symfunction_short H 2 H 0.3125 0.000 8.000
+# symfunction_short H 2 H 0.4217 0.000 8.000
+# symfunction_short H 2 H 0.5689 0.000 8.000
+# symfunction_short H 2 H 0.7676 0.000 8.000
+# symfunction_short H 2 H 1.0358 0.000 8.000
+# symfunction_short H 2 H 1.3975 0.000 8.000
+# symfunction_short H 2 H 1.8857 0.000 8.000
+# symfunction_short H 2 H 2.5443 0.000 8.000
+# symfunction_short H 2 H 3.4330 0.000 8.000
+# symfunction_short H 2 H 4.6321 0.000 8.000
+# symfunction_short H 2 H 6.2500 0.000 8.000
+# symfunction_short H 2 H 239.3705 0.400 8.000
+# symfunction_short H 2 H 177.4057 0.465 8.000
+# symfunction_short H 2 H 131.4815 0.540 8.000
+# symfunction_short H 2 H 97.4455 0.627 8.000
+# symfunction_short H 2 H 72.2202 0.728 8.000
+# symfunction_short H 2 H 53.5249 0.846 8.000
+# symfunction_short H 2 H 39.6691 0.983 8.000
+# symfunction_short H 2 H 29.4002 1.141 8.000
+# symfunction_short H 2 H 21.7895 1.326 8.000
+# symfunction_short H 2 H 16.1489 1.540 8.000
+# symfunction_short H 2 H 11.9685 1.789 8.000
+# symfunction_short H 2 H 8.8703 2.078 8.000
+# symfunction_short H 2 H 6.5741 2.414 8.000
+# symfunction_short H 2 H 4.8723 2.804 8.000
+# symfunction_short H 2 H 3.6110 3.257 8.000
+# symfunction_short H 2 H 2.6762 3.783 8.000
+# symfunction_short H 2 H 1.9835 4.394 8.000
+# symfunction_short H 2 H 1.4700 5.104 8.000
+# symfunction_short H 2 H 1.0895 5.929 8.000
+# symfunction_short H 2 H 0.8074 6.887 8.000

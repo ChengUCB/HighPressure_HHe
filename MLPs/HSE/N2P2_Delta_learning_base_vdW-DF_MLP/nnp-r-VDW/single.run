@@ -1,0 +1,21 @@
+#!/bin/bash
+#SBATCH --account CHENG-SL3-CPU #T2-CS061-CPU
+#SBATCH --partition cclake #skylake
+#SBATCH --nodes 6
+#SBATCH --ntasks 336
+#SBATCH --time 12:00:00
+
+module purge
+module load rhel7/default-peta4
+module load eigen/3.3.4
+module load intel/impi/2019.3/intel
+
+source ~/.bashrc
+
+#srun -n 224 nnp-scaling 1
+#nnp-scaling 1
+#srun -n 24
+srun -n 336 nnp-train
+
+wait
+

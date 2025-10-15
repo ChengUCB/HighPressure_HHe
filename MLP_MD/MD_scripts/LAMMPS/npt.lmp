@@ -1,0 +1,86 @@
+###############################################################################
+# VARIABLES
+###############################################################################
+clear
+variable dt              equal  0.0002                                                   # timestep (ps)
+variable intThermo       equal  10                                                       # screen output interval (timesteps)
+variable numSteps        equal  600000                                                    # total number of simulation timesteps (timesteps)
+variable mass2           equal  4.00026                                                 # mass for element 1 (C)  (g/mol)
+variable mass1           equal  1.0080                                                  # mass for element 2 (H) (g/mol)
+variable nameStartCfg    string "/scratch/bt309223/PBE_HHe/Initital_Structure/init-H-90-Pest-800.data"                				# name of the starting configuration file
+
+# set initial velocity distribution
+variable initTemp        equal  7000                                                   # initial temperature (K)
+variable velSeed         equal  498459                                                 # seed for random number generator
+# NVT integrator (Nose-Hoover)
+variable startTemp       equal  1000+7000                                                   # starting temperature for thermostat (K)
+variable stopTemp        equal  7000                                                   # final temperature for thermostat (K)
+variable tDamp           equal  0.02                                                    # thermostat damping factor (ps)
+# NPT integrator (Nose-Hoover)
+variable startPress       equal  10000*800                                                  # starting pressure for barostat (bar)
+variable stopPress        equal  10000*800                                                   # final pressure for barostat (bar)
+variable pDamp           equal  0.2                                                    # thermostat damping factor (ps)
+###############################################################################
+# SETUP
+###############################################################################
+units metal                                                                             # define unit system (metal = Angstrom, eV, ps, g/mol)
+boundary p p p                                                                          # set periodic boundary conditions
+atom_style atomic
+#box tilt large                                                                       # set atomic style for particles
+read_data ${nameStartCfg}                                                               # read start configuration
+#change_box all triclinic
+mass 1 ${mass1}                                                                         # set mass for element 1
+mass 2 ${mass2}          
+
+group h type 1
+group he type 2
+
+### SIMULATION STARTS HERE ###
+replicate 3 3 3
+
+neighbor       2.0 bin          # neighbor list skin width
+neigh_modify   every 1 delay 0 check yes # frequency to update neighor list
+
+#  --------------------- Potential definition  ---------------------
+include /scratch/bt309223/PBE_HHe/HHe.pp
+
+timestep ${dt}                                                                          # set timestep
+velocity all create ${initTemp} ${velSeed}                                              # create initial velocities
+thermo ${intThermo}                                                                     # set screen output
+thermo_style custom step time temp pe etotal press vol lx ly lz
+thermo_modify format 4 %20.15g
+
+################### relax geometry #######################
+min_style cg
+minimize 1e-4 1e-3 10 10
+##################### relax box  #######################
+fix 111 all box/relax iso ${startPress} vmax 0.05
+min_style sd
+minimize 1e-5 1e-4 1000 1000
+unfix 111
+#############################################################
+#
+#
+###############################################################################
+# SIMULATION
+###############################################################################
+#fix 1 all nvt temp ${startTemp} ${stopTemp} ${tDamp}
+#run 1000
+
+#unfix 1
+fix 1 all npt temp 7000 7000 ${tDamp} iso ${startPress} ${stopPress} ${pDamp}
+run 100
+unfix 1
+
+fix 2 all npt temp ${startTemp} ${stopTemp} ${tDamp} iso ${startPress} ${stopPress} ${pDamp}
+run 5000
+unfix 2
+
+fix 3 all npt temp ${stopTemp} ${stopTemp} ${tDamp} iso ${startPress} ${stopPress} ${pDamp}
+
+dump            traj_xyz all custom 1000 out.lammpstrj element x y z
+dump_modify     traj_xyz element H He sort id
+
+run ${numSteps}
+write_restart restart_file.restart
+
