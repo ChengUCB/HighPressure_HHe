@@ -30,11 +30,11 @@ Training scripts and fitted MLPs are provided in ./MLPs
 ## MLP MD and related analysis scripts
 Molecular dynamics inputs, runs, and analysis utilities are provided in the ./MLP_MD directory.
 - If you only need the final scientific outputs, `MLP-MD_results/` is the fastest place to begin.
-    - `MLP-MD_results/Immiscibility_boundaries/`: chemical-potential results in HDF5 format and contour data in CSV format for PBE, vdW-DF, and HSE.
-    - `MLP-MD_results/RK-model-fits/`: Redlich-Kister model fits and phase-boundary summaries.
-    - `MLP-MD_results/Sk-values-all/`: aggregated structure-factor datasets.
-    - `MLP-MD_results/System_size_tests/`: size-convergence and RDF comparison results.
-    - `MLP-MD_results/PIMD_CMD_compare/`: centroid MD vs PIMD comparison data and scripts.
+    - `./Immiscibility_boundaries/`: chemical-potential results in HDF5 format and contour data in CSV format for PBE, vdW-DF, and HSE.
+    - `./RK-model-fits/`: Redlich-Kister model fits and phase-boundary summaries.
+    - `./Sk-values-all/`: aggregated structure-factor datasets.
+    - `./System_size_tests/`: size-convergence and RDF comparison results.
+    - `./PIMD_CMD_compare/`: classic MD vs PIMD comparison data and scripts.
       
 As for the S0 method, please also refer to: https://github.com/BingqingCheng/S0
 
