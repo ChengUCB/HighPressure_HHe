@@ -25,7 +25,7 @@ Note that some large datasets are stored as split archives to stay within GitHub
 
 - MACE: [https://github.com/ACEsuit/mace](https://github.com/ACEsuit/mace)
   
-Training scripts and fitted MLPs are provided in ./MLPs
+Training scripts and fitted MLPs are provided in ./MLPs .
 
 ## MLP MD and related analysis scripts
 Molecular dynamics inputs, runs, and analysis utilities are provided in the ./MLP_MD directory.
@@ -34,7 +34,7 @@ Molecular dynamics inputs, runs, and analysis utilities are provided in the ./ML
     - `./RK-model-fits/`: Redlich-Kister model fits and phase-boundary summaries.
     - `./Sk-values-all/`: aggregated structure-factor datasets.
     - `./System_size_tests/`: size-convergence and RDF comparison results.
-    - `./PIMD_CMD_compare/`: classic MD vs PIMD comparison data and scripts.
+    - `./PIMD_CMD_compare/`: classical MD vs PIMD comparison data and scripts.
       
 As for the S0 method, please also refer to: https://github.com/BingqingCheng/S0
 
